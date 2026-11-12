@@ -1,0 +1,117 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  secrets:
+    name: Escaneo de secretos (gitleaks)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Instalar gitleaks 8.30.1 (SHA-256 verificado)
+        run: |
+          curl -fsSL -o gl.tgz https://github.com/gitleaks/gitleaks/releases/download/v8.30.1/gitleaks_8.30.1_linux_x64.tar.gz
+          echo "551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb  gl.tgz" | sha256sum -c -
+          tar -xzf gl.tgz gitleaks
+      - name: Escanear historial completo
+        run: ./gitleaks git . -c .gitleaks.toml --redact --verbose --exit-code 1
+
+  test:
+    name: Build, Credo y pruebas
+    runs-on: ubuntu-24.04
+    needs: secrets
+    container:
+      image: hexpm/elixir:1.20.5-erlang-29.1.2-debian-trixie-20261104-slim
+    services:
+      meilisearch:
+        image: getmeili/meilisearch:v1.56.2
+        env:
+          MEILI_MASTER_KEY: ci-only-meili-key-not-a-secret-0001
+          MEILI_NO_ANALYTICS: "true"
+    env:
+      MIX_ENV: test
+      MEILI_URL: http://meilisearch:7700
+      MEILI_API_KEY: ci-only-meili-key-not-a-secret-0001
+    steps:
+      - name: Paquetes del sistema
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends build-essential git poppler-utils ca-certificates curl
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            deps
+            _build
+          key: mix-${{ runner.os }}-${{ hashFiles('mix.lock') }}
+      - run: mix local.hex --force && mix local.rebar --force
+      - run: mix deps.get
+      - run: mix compile --warnings-as-errors
+      - run: mix format --check-formatted
+      - run: mix credo --strict
+      - name: Esperar a Meilisearch
+        run: for i in $(seq 1 30); do curl -fsS "$MEILI_URL/health" && break; sleep 2; done
+      - name: Pruebas (unitarias, integración con Meilisearch) y cobertura ≥ 70 %
+        run: mix test --cover --include meilisearch
+
+  search-quality:
+    name: T-08 búsqueda híbrida con el modelo real (manual)
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    needs: test
+    container:
+      image: hexpm/elixir:1.20.5-erlang-29.1.2-debian-trixie-20261104-slim
+    services:
+      meilisearch:
+        image: getmeili/meilisearch:v1.56.2
+        env:
+          MEILI_MASTER_KEY: ci-only-meili-key-not-a-secret-0001
+          MEILI_NO_ANALYTICS: "true"
+    env:
+      MIX_ENV: test
+      LEXEC_MODELS: "1"
+      MEILI_URL: http://meilisearch:7700
+      MEILI_API_KEY: ci-only-meili-key-not-a-secret-0001
+      BUMBLEBEE_CACHE_DIR: /github/home/bumblebee
+    steps:
+      - run: |
+          apt-get update
+          apt-get install -y --no-install-recommends build-essential git poppler-utils ca-certificates curl
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: |
+            deps
+            _build
+            /github/home/bumblebee
+          key: models-${{ runner.os }}-${{ hashFiles('mix.lock', 'config/config.exs') }}
+      - run: mix local.hex --force && mix local.rebar --force && mix deps.get
+      - run: mix test test/lexec/search_quality_test.exs --include meilisearch --include models
+
+  docker:
+    name: Imagen Docker
+    runs-on: ubuntu-24.04
+    needs: test
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: docker build -t lexec:ci .
