@@ -25,7 +25,9 @@ COPY rel rel
 RUN mix release
 
 FROM debian:trixie-20261104-slim AS runner
+# upgrade pulls Debian security fixes released after the base image (for example zlib).
 RUN apt-get update \
+ && apt-get upgrade -y --no-install-recommends \
  && apt-get install -y --no-install-recommends libstdc++6 openssl libncurses6 ca-certificates poppler-utils curl \
  && rm -rf /var/lib/apt/lists/* \
  && useradd --system --uid 10001 --home-dir /app --shell /usr/sbin/nologin lexec \
