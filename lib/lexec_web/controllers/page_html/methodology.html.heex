@@ -1,0 +1,108 @@
+<Layouts.app flash={@flash} active={:methodology}>
+  <div class="page-head">
+    <h1>Metodología</h1>
+    <p>
+      De dónde sale cada párrafo, qué se excluye, cómo se anonimiza y dónde están los límites.
+    </p>
+  </div>
+
+  <dl class="stats" aria-label="Corpus actual">
+    <div>
+      <dt>Sentencias publicadas</dt><dd>{@stats.published}</dd>
+    </div>
+    <div>
+      <dt>Párrafos indexados</dt><dd>{@stats.paragraphs}</dd>
+    </div>
+    <div>
+      <dt>Excluidas antes de procesar</dt><dd>{@stats.excluded}</dd>
+    </div>
+    <div>
+      <dt>En revisión humana</dt><dd>{@stats.pending}</dd>
+    </div>
+    <div>
+      <dt>Retiradas</dt><dd>{@stats.withdrawn}</dd>
+    </div>
+  </dl>
+
+  <div class="prose results">
+    <h2>Fuente</h2>
+    <p>
+      Sentencias públicas de la Corte Constitucional del Ecuador. La vía preferida es pedir el corpus a la Corte mediante una
+      solicitud de acceso a la información pública (LOTAIP). Si se recopila del portal, LEXEC respeta el archivo robots.txt
+      de cada servidor, hace como máximo una petición por segundo, se identifica con un contacto y no descarga dos veces el
+      mismo documento. El PDF se borra en cuanto se extrae su texto; solo se guarda su huella (SHA-256).
+    </p>
+
+    <h2>Qué se excluye y por qué</h2>
+    <p>
+      Siguiendo la Política de Protección de Datos Personales de la Corte (v1.0, junio de 2026), se excluyen por completo, <strong>antes de que cualquier modelo las procese</strong>, las causas con niñas, niños y adolescentes, las de víctimas
+      de violencia y las marcadas como reservadas. De una causa excluida solo queda el motivo y la regla que la excluyó; nunca su texto.
+    </p>
+
+    <h2>Cómo se anonimiza</h2>
+    <ul>
+      <li>
+        Reglas deterministas para cédulas y RUC, teléfonos, correos y direcciones: todo número de diez dígitos se reemplaza.
+      </li>
+      <li>
+        Nombres de personas naturales detectados por reglas y, si está activo, por un modelo de reconocimiento de entidades.
+      </li>
+      <li>
+        Instituciones y autoridades en ejercicio, como juezas y jueces de la Corte, se conservan.
+      </li>
+      <li>
+        Si el modelo duda, la sentencia va a una cola de revisión humana y no se publica hasta que alguien la aprueba.
+      </li>
+      <li>
+        Nunca se guarda el dato original reemplazado: solo cuántos datos de cada tipo se reemplazaron.
+      </li>
+    </ul>
+
+    <h2>Búsqueda y respuestas</h2>
+    <p>
+      La búsqueda combina palabras exactas y significado sobre párrafos anonimizados. Por defecto LEXEC solo muestra párrafos
+      reales. El resumen con citas es opcional: cada oración debe citar textualmente un párrafo recuperado y un verificador la
+      elimina si la cita no existe tal cual.
+    </p>
+
+    <h2>Límites</h2>
+    <ul>
+      <li>
+        La anonimización automática puede fallar. Si encuentra un dato que le identifica, <a href="/correccion">pida su retiro</a>; respondemos en {@response_days} días.
+      </li>
+      <li>La segmentación depende de que la sentencia numere sus párrafos.</li>
+      <li>LEXEC no es asesoría legal ni sustituye al documento oficial.</li>
+    </ul>
+
+    <h2>Versiones de las reglas</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <caption>Reglas y modelos en uso</caption>
+        <tbody>
+          <tr>
+            <th scope="row">Exclusión</th><td class="mono">{@versions.exclusion}</td>
+          </tr>
+          <tr>
+            <th scope="row">Anonimización</th><td class="mono">{@versions.anonymization}</td>
+          </tr>
+          <tr>
+            <th scope="row">Segmentación</th><td class="mono">{@versions.segmentation}</td>
+          </tr>
+          <tr>
+            <th scope="row">Relaciones</th><td class="mono">{@versions.relations}</td>
+          </tr>
+          <tr>
+            <th scope="row">Modelo de búsqueda por significado</th><td class="mono">
+              {@embedding_model || "desactivado"}
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">Modelo de entidades</th><td class="mono">
+              {@ner_model || "desactivado (solo reglas)"}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</Layouts.app>

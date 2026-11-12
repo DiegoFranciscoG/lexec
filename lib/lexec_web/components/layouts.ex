@@ -1,159 +1,120 @@
 defmodule LexecWeb.Layouts do
-  @moduledoc """
-  This module holds layouts and related functionality
-  used by your application.
-  """
+  @moduledoc "Page shell: brand, navigation, legal notices, footer and cookie notice."
   use LexecWeb, :html
 
-  # Embed all files in layouts/* within this module.
-  # The default root.html.heex file contains the HTML
-  # skeleton of your application, namely HTML headers
-  # and other static content.
   embed_templates "layouts/*"
 
-  @doc """
-  Renders your app layout.
+  @nav [
+    {"/", "Buscar", :search},
+    {"/precedentes", "Precedentes", :precedents},
+    {"/metodologia", "Metodología", :methodology},
+    {"/correccion", "Corrección y retiro", :correction},
+    {"/aviso-legal", "Aviso legal", :legal}
+  ]
 
-  This function is typically invoked from every template,
-  and it often contains your application menu, sidebar,
-  or similar.
-
-  ## Examples
-
-      <Layouts.app flash={@flash}>
-        <h1>Content</h1>
-      </Layouts.app>
-
-  """
-  attr :flash, :map, required: true, doc: "the map of flash messages"
-
-  attr :current_scope, :map,
-    default: nil,
-    doc: "the current [scope](https://phoenix.hexdocs.pm/scopes.html)"
-
+  attr :flash, :map, required: true
+  attr :active, :atom, default: nil, doc: "current section, marked with aria-current"
   slot :inner_block, required: true
 
   def app(assigns) do
+    assigns =
+      assigns
+      |> assign(:nav, @nav)
+      |> assign(:disclaimer, Lexec.Rules.fetch!(:app, ["texts", "disclaimer"]))
+      |> assign(:demo_notice, Lexec.Rules.fetch!(:app, ["texts", "demo_notice"]))
+      |> assign(:demo?, Application.get_env(:lexec, :demo_mode, false))
+
     ~H"""
-    <header class="navbar px-4 sm:px-6 lg:px-8">
-      <div class="flex-1">
-        <a href="/" class="flex-1 flex w-fit items-center gap-2">
-          <img src={~p"/images/logo.svg"} width="36" />
-          <span class="text-sm font-semibold">v{Application.spec(:phoenix, :vsn)}</span>
-        </a>
-      </div>
-      <div class="flex-none">
-        <ul class="flex px-1 space-x-4 items-center">
-          <li>
-            <a href="https://phoenixframework.org/" class="btn btn-ghost">Website</a>
-          </li>
-          <li>
-            <a href="https://github.com/phoenixframework/phoenix" class="btn btn-ghost">GitHub</a>
-          </li>
-          <li>
-            <.theme_toggle />
-          </li>
-          <li>
-            <a href="https://phoenix.hexdocs.pm/overview.html" class="btn btn-primary">
-              Get Started <span aria-hidden="true">&rarr;</span>
-            </a>
-          </li>
-        </ul>
+    <header class="topbar">
+      <div class="container topbar__inner">
+        <.brand />
+        <nav aria-label="Principal">
+          <ul class="nav">
+            <li :for={{href, label, key} <- @nav}>
+              <a href={href} aria-current={if @active == key, do: "page"}>{label}</a>
+            </li>
+          </ul>
+        </nav>
       </div>
     </header>
+    <div :if={@demo?} class="band band--demo" role="note">
+      <p class="container">{@demo_notice}</p>
+    </div>
+    <div class="band band--legal" role="note">
+      <p class="container" data-disclaimer><strong>Aviso:</strong> {@disclaimer}</p>
+    </div>
 
-    <main class="px-4 py-20 sm:px-6 lg:px-8">
-      <div class="mx-auto max-w-2xl space-y-4">
-        {render_slot(@inner_block)}
-      </div>
+    <main id="contenido" class="main container" tabindex="-1">
+      {render_slot(@inner_block)}
     </main>
+
+    <footer class="footer">
+      <div class="container footer__grid">
+        <div>
+          <.brand />
+          <p>
+            Proyecto académico, gratuito y sin publicidad. Sin cuentas de usuario.
+            Las sentencias pertenecen a la Corte Constitucional del Ecuador; LEXEC muestra solo texto
+            anonimizado y enlaza siempre al documento oficial.
+          </p>
+        </div>
+        <div>
+          <h2>El proyecto</h2>
+          <ul>
+            <li><a href="/metodologia">Metodología y fuentes</a></li>
+            <li><a href="/precedentes">Red de precedentes</a></li>
+            <li><a href="/correccion">Solicitar corrección o retiro</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Legal</h2>
+          <ul>
+            <li><a href="/aviso-legal">Aviso legal</a></li>
+            <li><a href="/aviso-legal#privacidad">Privacidad</a></li>
+            <li><a href="/aviso-legal#cookies">Cookies</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <div class="cookie-note" id="cookie-note" role="region" aria-label="Aviso de cookies">
+      <p>
+        Solo usamos una cookie técnica necesaria para que el sitio funcione. No hay analítica ni publicidad. <a href="/aviso-legal#cookies">Más información</a>.
+      </p>
+      <button type="button" class="btn" data-cookie-ack>Entendido</button>
+    </div>
 
     <.flash_group flash={@flash} />
     """
   end
 
-  @doc """
-  Shows the flash group with standard titles and content.
-
-  ## Examples
-
-      <.flash_group flash={@flash} />
-  """
-  attr :flash, :map, required: true, doc: "the map of flash messages"
-  attr :id, :string, default: "flash-group", doc: "the optional id of flash container"
-
-  def flash_group(assigns) do
+  def brand(assigns) do
     ~H"""
-    <div id={@id} aria-live="polite">
-      <.flash kind={:info} flash={@flash} />
-      <.flash kind={:error} flash={@flash} />
-
-      <.flash
-        id="client-error"
-        kind={:error}
-        title="We can't find the internet"
-        phx-disconnected={
-          show(".phx-client-error #client-error")
-          |> JS.remove_attribute("hidden", to: ".phx-client-error #client-error")
-        }
-        phx-connected={hide("#client-error") |> JS.set_attribute({"hidden", ""})}
-        hidden
-      >
-        Attempting to reconnect
-        <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
-      </.flash>
-
-      <.flash
-        id="server-error"
-        kind={:error}
-        title="Something went wrong!"
-        phx-disconnected={
-          show(".phx-server-error #server-error")
-          |> JS.remove_attribute("hidden", to: ".phx-server-error #server-error")
-        }
-        phx-connected={hide("#server-error") |> JS.set_attribute({"hidden", ""})}
-        hidden
-      >
-        Attempting to reconnect
-        <.icon name="hero-arrow-path" class="ml-1 size-3 motion-safe:animate-spin" />
-      </.flash>
-    </div>
+    <a href="/" class="brand" aria-label="LEXEC, inicio">
+      <svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+        <path d="M3 11.5 20 3l17 8.5z" fill="currentColor" />
+        <rect class="brand__band" x="5" y="12.5" width="30" height="2" />
+        <rect x="8.5" y="16" width="4" height="15" fill="currentColor" />
+        <rect x="18" y="16" width="4" height="15" fill="currentColor" />
+        <rect x="27.5" y="16" width="4" height="15" fill="currentColor" />
+        <rect x="4" y="32" width="32" height="2.5" fill="currentColor" />
+        <rect x="2" y="35.5" width="36" height="1.5" fill="currentColor" />
+      </svg>
+      <span>
+        <span class="brand__name">LEXEC</span>
+        <span class="brand__sub">Jurisprudencia constitucional del Ecuador</span>
+      </span>
+    </a>
     """
   end
 
-  @doc """
-  Provides dark vs light theme toggle based on themes defined in app.css.
+  attr :flash, :map, required: true
 
-  See <head> in root.html.heex which applies the theme before page load.
-  """
-  def theme_toggle(assigns) do
+  def flash_group(assigns) do
     ~H"""
-    <div class="card relative flex flex-row items-center border-2 border-base-300 bg-base-300 rounded-full">
-      <div class="absolute w-1/3 h-full rounded-full border-1 border-base-200 bg-base-100 brightness-200 left-0 [[data-theme=light]_&]:left-1/3 [[data-theme=dark]_&]:left-2/3 [[data-theme-source=system]_&]:!left-0 transition-[left]" />
-
-      <button
-        class="flex p-2 cursor-pointer w-1/3"
-        phx-click={JS.dispatch("phx:set-theme")}
-        data-phx-theme="system"
-      >
-        <.icon name="hero-computer-desktop-micro" class="size-4 opacity-75 hover:opacity-100" />
-      </button>
-
-      <button
-        class="flex p-2 cursor-pointer w-1/3"
-        phx-click={JS.dispatch("phx:set-theme")}
-        data-phx-theme="light"
-      >
-        <.icon name="hero-sun-micro" class="size-4 opacity-75 hover:opacity-100" />
-      </button>
-
-      <button
-        class="flex p-2 cursor-pointer w-1/3"
-        phx-click={JS.dispatch("phx:set-theme")}
-        data-phx-theme="dark"
-      >
-        <.icon name="hero-moon-micro" class="size-4 opacity-75 hover:opacity-100" />
-      </button>
+    <div id="flash-group" aria-live="polite">
+      <.flash kind={:info} flash={@flash} />
+      <.flash kind={:error} flash={@flash} />
     </div>
     """
   end

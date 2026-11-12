@@ -1,9 +1,5 @@
 defmodule LexecWeb.PageHTML do
-  @moduledoc """
-  This module contains pages rendered by PageController.
-
-  See the `page_html` directory for all templates available.
-  """
+  @moduledoc "Static pages: methodology and legal notice."
   use LexecWeb, :html
 
   embed_templates "page_html/*"

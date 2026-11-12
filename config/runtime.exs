@@ -67,9 +67,11 @@ if config_env() != :test do
 
   if System.get_env("ANSWER_BACKEND") == "ollama" do
     config :lexec, Lexec.Answer.Ollama,
-      url: System.get_env("OLLAMA_URL") || raise("OLLAMA_URL is required for ANSWER_BACKEND=ollama"),
+      url:
+        System.get_env("OLLAMA_URL") || raise("OLLAMA_URL is required for ANSWER_BACKEND=ollama"),
       model:
-        System.get_env("OLLAMA_MODEL") || raise("OLLAMA_MODEL is required for ANSWER_BACKEND=ollama"),
+        System.get_env("OLLAMA_MODEL") ||
+          raise("OLLAMA_MODEL is required for ANSWER_BACKEND=ollama"),
       timeout: 60_000
   end
 
@@ -119,7 +121,9 @@ if config_env() == :prod do
 
   config :lexec, LexecWeb.Endpoint,
     url: [host: host, port: public_port, scheme: scheme],
-    check_origin: ["#{scheme}://#{host}" <> if(public_port in [80, 443], do: "", else: ":#{public_port}")],
+    check_origin: [
+      "#{scheme}://#{host}" <> if(public_port in [80, 443], do: "", else: ":#{public_port}")
+    ],
     http: [ip: {0, 0, 0, 0, 0, 0, 0, 0}],
     secret_key_base: secret_key_base
 end

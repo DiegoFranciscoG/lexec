@@ -1,0 +1,79 @@
+<Layouts.app flash={@flash} active={:legal}>
+  <div class="page-head">
+    <h1>Aviso legal, privacidad y cookies</h1>
+    <p>Texto pendiente de revisión por un abogado antes de publicar el sitio.</p>
+  </div>
+
+  <div class="prose">
+    <h2 id="aviso-legal">Aviso legal</h2>
+    <p>
+      LEXEC es un proyecto académico, gratuito y sin fines de lucro de Diego Francisco Granda Zhingre (Cuenca, Ecuador).
+      No tiene publicidad, no cobra, no crea cuentas de usuario y no tiene fines comerciales ni políticos.
+    </p>
+    <p>
+      <strong>LEXEC no es asesoría legal.</strong>
+      La información puede contener errores de extracción o de anonimización.
+      Antes de usar cualquier sentencia, consulte el documento oficial de la Corte Constitucional del Ecuador, enlazado en cada
+      resultado, y a un profesional del derecho.
+    </p>
+    <p>
+      Las sentencias son decisiones públicas de la Corte Constitucional del Ecuador. LEXEC no está afiliado a la Corte ni habla
+      en su nombre.
+    </p>
+
+    <h2 id="privacidad">Privacidad</h2>
+    <ul>
+      <li>
+        <strong>Sentencias:</strong>
+        solo se publica texto anonimizado. Las causas con niñas, niños y adolescentes o víctimas de
+        violencia se excluyen por completo.
+      </li>
+      <li>
+        <strong>Búsquedas:</strong>
+        no se guardan. La dirección IP se usa en memoria, transformada, solo para limitar abusos, y
+        se descarta.
+      </li>
+      <li>
+        <strong>Solicitudes de corrección:</strong>
+        se guarda el número de sentencia, el motivo y, solo si usted lo da y acepta,
+        un correo para responderle, que se borra al cerrar la solicitud.
+      </li>
+      <li>
+        <strong>Sus derechos</strong>
+        (Ley Orgánica de Protección de Datos Personales): acceso, rectificación, eliminación y
+        oposición. Ejérzalos en <a href="/correccion">Corrección y retiro</a>; respondemos en {@response_days} días.
+      </li>
+    </ul>
+
+    <h2 id="cookies">Cookies</h2>
+    <div class="table-wrap">
+      <table class="table">
+        <caption>Lo que este sitio guarda en su navegador</caption>
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th><th scope="col">Tipo</th><th scope="col">Para qué</th><th scope="col">
+              Duración
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="mono">_lexec_key</td>
+            <td>Cookie técnica necesaria</td>
+            <td>Proteger los formularios contra envíos falsificados (CSRF).</td>
+            <td>La sesión del navegador</td>
+          </tr>
+          <tr>
+            <td class="mono">lexec:cookie-note</td>
+            <td>Almacenamiento local</td>
+            <td>Recordar que ya leyó este aviso.</td>
+            <td>Hasta que lo borre</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p>
+      No usamos cookies de analítica, publicidad ni de terceros. Las fuentes tipográficas se sirven desde este mismo sitio.
+    </p>
+  </div>
+</Layouts.app>
