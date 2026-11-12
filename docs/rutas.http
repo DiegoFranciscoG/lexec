@@ -1,0 +1,26 @@
+### LEXEC no expone una API REST pública: la interfaz es Phoenix LiveView.
+### Estas son las rutas HTTP para probar con la extensión REST Client o con curl.
+@host = http://localhost:4000
+
+### Salud (para Docker/monitoreo; no expone detalles)
+GET {{host}}/health
+
+### Búsqueda (todo el estado vive en la URL; funciona sin JavaScript)
+GET {{host}}/?q=despido%20de%20una%20mujer%20embarazada&modo=hibrida
+
+### Búsqueda solo por palabras, filtrada por tipo y años, con resumen verificado
+GET {{host}}/?q=tasa&tipo=IN&desde=2022&hasta=2022&modo=palabras&respuesta=1
+
+### Ficha de sentencia (id interno; 404 si no está publicada)
+GET {{host}}/sentencias/1
+
+### Red de precedentes filtrada por tipo de acción
+GET {{host}}/precedentes?tipo=EP
+
+### Metodología y aviso legal
+GET {{host}}/metodologia
+GET {{host}}/aviso-legal
+
+### Área de revisión (HTTP Basic con ADMIN_USER / ADMIN_PASSWORD del .env)
+GET {{host}}/admin/revision
+Authorization: Basic {{$env ADMIN_BASIC}}

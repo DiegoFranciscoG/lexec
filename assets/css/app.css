@@ -81,7 +81,7 @@ a.link:hover, .prose a:hover { text-decoration-thickness: 2px; }
 .hit__links { display: flex; flex-wrap: wrap; gap: var(--space-md); margin-top: var(--space-sm); font-size: var(--text-sm); }
 .icon-external { display: inline-block; width: 14px; height: 14px; vertical-align: -2px; margin-left: var(--space-3xs); }
 
-.answer { margin-top: var(--space-xl); padding: var(--space-lg); background: var(--color-sheet); border-left: var(--rule-bar) solid var(--color-accent); }
+.answer { margin-bottom: var(--space-lg); margin-top: var(--space-xl); padding: var(--space-lg); background: var(--color-sheet); border-left: var(--rule-bar) solid var(--color-accent); }
 .answer ol { margin: var(--space-sm) 0 0; padding-left: var(--space-lg); display: grid; gap: var(--space-sm); }
 .answer__note { font-size: var(--text-sm); color: var(--color-muted); margin-top: var(--space-sm); }
 
