@@ -1,0 +1,44 @@
+# Reglas de exclusión. Se aplican ANTES de cualquier modelo (NER, embeddings o generación).
+# Fuente: Política de Protección de Datos de la Corte Constitucional (POL-A-05, v1.0), §7.2.2 b y §7.2.9 c.
+# Criterio conservador: basta una coincidencia para excluir la causa completa.
+version: "excl-2026.11.1"
+
+# Números de caso que la propia Corte marque como reservados (p. ej. en la respuesta LOTAIP).
+excluded_case_numbers: []
+
+# Tipos de acción excluidos en bloque (vacío: se decide por contenido y metadatos).
+excluded_action_types: []
+
+# Banderas de metadatos del manifiesto de recopilación que excluyen por sí solas.
+metadata_flags:
+  minors: minors
+  violence: violence
+  reserved: reserved
+
+rules:
+  - id: minors-keywords
+    reason: minors
+    patterns:
+      - '\bniñ[oa]s?\b'
+      - '\badolescentes?\b'
+      - '\bmenor(?:es)? de edad\b'
+      - '\bNNA\b'
+      - '\binter[eé]s superior del niñ'
+      - '\binfantes?\b'
+      - '\bC[oó]digo de la Niñez\b'
+  - id: violence-keywords
+    reason: violence
+    patterns:
+      - '\bviolencia intrafamiliar\b'
+      - '\bviolencia (?:contra la mujer|de g[eé]nero|dom[eé]stica|sexual|psicol[oó]gica|f[ií]sica)\b'
+      - '\babuso sexual\b'
+      - '\bviolaci[oó]n sexual\b'
+      - '\bfemicidio\b'
+      - '\bv[ií]ctimas? de violencia\b'
+      - '\bLey Org[aá]nica Integral para Prevenir y Erradicar la Violencia\b'
+  - id: reserved-marker
+    reason: reserved
+    patterns:
+      - '\binformaci[oó]n reservada\b'
+      - '\bacceso restringido\b'
+      - '\bcausa reservada\b'

@@ -1,0 +1,116 @@
+# Reglas de anonimización. Nunca se guarda el dato original: solo conteos y versión.
+version: "anon-2026.11.1"
+
+# Umbral mínimo de recall de personas en los fixtures sintéticos (prueba T-02).
+person_recall_min: 0.9
+
+# NER: entidades PER con confianza menor a esto mandan la sentencia a revisión humana.
+review:
+  ner_min_score: 0.80
+  ner_labels: ["PER"]
+
+placeholders:
+  person: "[PERSONA %{n}]"
+  id_number: "[CÉDULA]"
+  phone: "[TELÉFONO]"
+  email: "[CORREO]"
+  address: "[DIRECCIÓN]"
+
+# Patrones deterministas. El grupo con nombre "value" (si existe) es lo único que se reemplaza.
+patterns:
+  email: '[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}'
+  # Teléfonos: solo con contexto ("teléfono", "celular"...) o prefijo +593; el resto de
+  # números de 10 dígitos se trata como cédula (nunca queda un número sin anonimizar).
+  # Cédula (10 dígitos, con o sin guion o espacios) y RUC (13). Cualquier corrida así se reemplaza:
+  # no se valida el dígito verificador para no dejar pasar cédulas mal escritas.
+  id_number: '(?<![\d.])(?:\d[\s.-]?){9}\d(?:\d{3})?(?![\d])'
+  phone: '(?:(?i:tel[eé]fonos?|celular(?:es)?|telf\.?|m[oó]vil|whatsapp)\D{0,15}|(?=\+593))(?<value>(?:\+593[\s-]?\(?0?\d\)?|\(0\d\)|0\d)(?:[\s-]?\d){7,8})(?!\d)'
+  address: '(?i:domiciliad[oa] en|con domicilio en|direcci[oó]n domiciliaria:?|reside en|ubicad[oa] en las calles)\s+(?<value>[^.;,\n]{3,120})'
+
+# Palabras que anteceden al nombre de una persona natural.
+name_triggers:
+  - 'señor(?:a|ita)?'
+  - 'Sr\.'
+  - 'Sra\.'
+  - 'Srta\.'
+  - 'don'
+  - 'doña'
+  - 'ciudadan[oa]'
+  - 'accionantes?'
+  - 'legitimad[oa] activ[oa]'
+  - 'el actor'
+  - 'la actora'
+  - 'trabajador(?:a)?'
+  - 'abogad[oa]'
+  - 'Ab\.'
+  - 'Abg\.'
+  - 'Dr\.'
+  - 'Dra\.'
+  - 'Lcdo\.'
+  - 'Lcda\.'
+  - 'Ing\.'
+  - 'procurador(?:a)? judicial'
+  - 'hij[oa] de'
+  - 'cónyuge'
+  - 'herederos de'
+  - 'periodista'
+  - 'comunicador(?:a)?'
+  - 'afiliad[oa]'
+  - 'demandad[oa]'
+  - 'demandante'
+  - 'recurrente'
+
+# Nombre propio: 2 a 5 palabras con mayúscula inicial, con partículas.
+name_token: '[A-ZÁÉÍÓÚÑ][a-záéíóúñü]+'
+name_particles: ['de', 'del', 'de la', 'de los', 'de las']
+
+# Antes de "con cédula", "C.I." o "portador(a) de la cédula" también hay un nombre.
+name_before_id: '(?<name>{NAME}),?\s+(?:con\s+|portador[a]? de la\s+)?(?:c[eé]dula|C\.I\.)'
+
+# Palabras que nunca inician el nombre de una persona (instituciones, cargos, normas).
+non_person_first_tokens:
+  - Corte
+  - Constitución
+  - Constitucional
+  - Ministerio
+  - Ministra
+  - Ministro
+  - Sala
+  - Unidad
+  - Tribunal
+  - Juez
+  - Jueza
+  - Juzgado
+  - Instituto
+  - Consejo
+  - Asamblea
+  - Presidencia
+  - Presidente
+  - Procuraduría
+  - Defensoría
+  - Fiscalía
+  - Superintendencia
+  - Servicio
+  - Secretaría
+  - Banco
+  - Universidad
+  - Hospital
+  - Gobierno
+  - Municipio
+  - Empresa
+  - Estado
+  - República
+  - Ley
+  - Código
+  - Reglamento
+  - Pleno
+  - Policía
+  - Agencia
+  - Dirección
+  - Registro
+  - Caso
+  - Sentencia
+  - Quito
+  - Guayaquil
+  - Cuenca
+  - Ecuador

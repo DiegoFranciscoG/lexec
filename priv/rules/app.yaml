@@ -1,0 +1,53 @@
+# Parámetros de la aplicación. Nada de esto va quemado en el código.
+version: "app-2026.11.1"
+
+search:
+  # 0.0 = solo palabras, 1.0 = solo significado (Meilisearch semanticRatio)
+  default_semantic_ratio: 0.5
+  min_query_length: 2
+  max_query_length: 300
+  page_size: 10
+  max_ruling_year_span: 60
+
+answer:
+  # Una oración del modo respuesta solo sobrevive si cita textualmente al menos esto
+  min_quote_chars: 20
+  max_sentences: 5
+  no_answer: "No encontré sentencias que respondan esto."
+
+corrections:
+  response_days: 15
+  reason_min: 10
+  reason_max: 1000
+
+rate_limits:
+  search:
+    limit: 30
+    window_seconds: 60
+  correction:
+    limit: 3
+    window_seconds: 3600
+
+harvest:
+  # Recopilación respetuosa: como máximo una petición por segundo
+  allowed_messages: 1
+  interval_ms: 1000
+  max_retries: 3
+  base_backoff_ms: 1000
+  receive_timeout_ms: 30000
+  max_pdf_bytes: 26214400
+
+texts:
+  disclaimer: >-
+    LEXEC no es asesoría legal. Es un proyecto académico, gratuito y sin fines comerciales ni políticos.
+    Verifique siempre el documento oficial de la Corte Constitucional.
+  official_link: "Documento oficial"
+  demo_notice: >-
+    Demostración con sentencias FICTICIAS escritas para este proyecto. No corresponden a causas reales.
+
+# Umbrales de calidad verificados por las pruebas automáticas.
+quality:
+  citation_precision_min: 0.95
+  citation_recall_min: 0.95
+  # Búsqueda híbrida vs. solo palabras sobre priv/seeds/eval/queries.json (T-08)
+  hybrid_min_mrr_gain: 0.05

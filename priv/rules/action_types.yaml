@@ -1,0 +1,26 @@
+# Catálogo de tipos de acción de la Corte Constitucional.
+# Fuente: boletines jurisprudenciales de la Corte (ver docs/investigacion.md #4). IN y JI: SUPUESTO S-3.
+version: "types-2026.11.1"
+
+types:
+  EP: Acción extraordinaria de protección
+  JP: Jurisprudencia vinculante de acción de protección
+  JH: Jurisprudencia vinculante de hábeas corpus
+  JD: Jurisprudencia vinculante de hábeas data
+  JC: Jurisprudencia vinculante de medidas cautelares
+  JI: Jurisprudencia vinculante de acceso a la información pública
+  IN: Acción pública de inconstitucionalidad
+  CN: Consulta de norma
+  IS: Acción de incumplimiento de sentencias y dictámenes constitucionales
+  AN: Acción por incumplimiento
+  DC: Acción de dirimencia de competencias
+  TI: Tratado internacional
+  EE: Estado de excepción
+
+# Sufijos del régimen de transición (formato 001-10-SEP-CC) y su equivalente actual.
+legacy:
+  SEP: EP
+  SIN: IN
+  SCN: CN
+  SIS: IS
+  SAN: AN

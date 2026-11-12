@@ -1,0 +1,44 @@
+# Extracción de relaciones: sentencias citadas y normas invocadas.
+version: "rel-2026.11.1"
+
+case_patterns:
+  # 1234-19-EP/23 (número-año de ingreso-tipo/año de la sentencia)
+  modern: '(?<![\d-])(?<num>\d{1,5})-(?<year>\d{2})-(?<type>[A-Z]{2})/(?<ryear>\d{2})(?![\d])'
+  # 001-10-SEP-CC (régimen de transición)
+  legacy: '(?<![\d-])(?<num>\d{3})-(?<year>\d{2})-(?<type>S[A-Z]{2,3})-CC(?![A-Z])'
+
+article_mention: '(?i:art[ií]culos?|arts?\.)\s+(?<arts>\d{1,4}(?:\s*(?:,|y|e)\s*\d{1,4})*)'
+# Cuántos caracteres después de la mención se busca el cuerpo normativo.
+article_window: 160
+
+norm_bodies:
+  CRE:
+    name: Constitución de la República del Ecuador
+    aliases:
+      - 'Constituci[oó]n de la Rep[uú]blica'
+      - 'la Constituci[oó]n'
+      - '\bCRE\b'
+  LOGJCC:
+    name: Ley Orgánica de Garantías Jurisdiccionales y Control Constitucional
+    aliases:
+      - 'Ley Org[aá]nica de Garant[ií]as Jurisdiccionales y Control Constitucional'
+      - '\bLOGJCC\b'
+  COIP:
+    name: Código Orgánico Integral Penal
+    aliases:
+      - 'C[oó]digo Org[aá]nico Integral Penal'
+      - '\bCOIP\b'
+  CT:
+    name: Código del Trabajo
+    aliases:
+      - 'C[oó]digo del Trabajo'
+  COGEP:
+    name: Código Orgánico General de Procesos
+    aliases:
+      - 'C[oó]digo Org[aá]nico General de Procesos'
+      - '\bCOGEP\b'
+  LOPDP:
+    name: Ley Orgánica de Protección de Datos Personales
+    aliases:
+      - 'Ley Org[aá]nica de Protecci[oó]n de Datos Personales'
+      - '\bLOPDP\b'

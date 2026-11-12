@@ -1,0 +1,44 @@
+# Instituciones y autoridades en ejercicio que NO se anonimizan.
+# Las autoridades listadas para la demo son ficticias.
+version: "preserve-2026.11.1"
+
+institutions:
+  - Corte Constitucional
+  - Corte Nacional de Justicia
+  - Corte Provincial de Justicia
+  - Consejo de la Judicatura
+  - Asamblea Nacional
+  - Presidencia de la República
+  - Procuraduría General del Estado
+  - Defensoría del Pueblo
+  - Defensoría Pública
+  - Fiscalía General del Estado
+  - Instituto Ecuatoriano de Seguridad Social
+  - Servicio de Rentas Internas
+  - Ministerio del Trabajo
+  - Ministerio de Salud Pública
+  - Ministerio de Educación
+  - Superintendencia de Compañías
+  - Contraloría General del Estado
+  - Consejo Nacional Electoral
+  - Tribunal Contencioso Electoral
+  - Unidad Judicial
+  - Sala Especializada
+  - Banco Central del Ecuador
+  - Registro Civil
+
+# Autoridades en ejercicio (juezas y jueces de la Corte). En la demo: nombres ficticios.
+authorities:
+  - Alba Ruiz Andrade
+  - Marco Valdivieso Torres
+  - Elena Paredes Loja
+  - Tomás Benavides Ortega
+  - Carmen Salazar Vintimilla
+
+# Frases que introducen a una autoridad: el nombre que sigue se conserva.
+authority_triggers:
+  - 'jueza? constitucional'
+  - 'jueza? ponente'
+  - 'jueces constitucionales'
+  - 'Presidente de la Corte Constitucional'
+  - 'Presidenta de la Corte Constitucional'
