@@ -208,4 +208,4 @@ Más detalle en [SECURITY.md](SECURITY.md).
 
 ## Autor
 
-**Diego Francisco Granda Zhingre** · [GitHub](https://github.com/DiegoFranciscoG) · LinkedIn: _(agrega tu URL)_
+**Diego Francisco Granda Zhingre** · [GitHub](https://github.com/DiegoFranciscoG) · [LinkedIn](https://www.linkedin.com/in/diego-francisco-g-61b793254/)
