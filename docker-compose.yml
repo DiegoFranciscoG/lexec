@@ -1,0 +1,52 @@
+# Local stack: Phoenix + Meilisearch with the FICTITIOUS demo corpus.
+#   cp .env.example .env   # fill in the values
+#   docker compose up --build
+# The first start downloads the pinned e5 model (~470 MB) into the "models" volume.
+name: lexec
+
+services:
+  meilisearch:
+    image: getmeili/meilisearch:v1.56.2
+    environment:
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:?Define MEILI_MASTER_KEY in .env}
+      MEILI_ENV: production
+      MEILI_NO_ANALYTICS: "true"
+    volumes:
+      - meili_data:/meili_data
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:7700/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    restart: unless-stopped
+
+  app:
+    build: .
+    depends_on:
+      meilisearch:
+        condition: service_healthy
+    ports:
+      - "127.0.0.1:4000:4000"
+    environment:
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:?Define SECRET_KEY_BASE in .env}
+      ADMIN_USER: ${ADMIN_USER:?Define ADMIN_USER in .env}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:?Define ADMIN_PASSWORD in .env}
+      MEILI_URL: http://meilisearch:7700
+      MEILI_API_KEY: ${MEILI_API_KEY:?Define MEILI_API_KEY in .env}
+      PHX_HOST: ${PHX_HOST:-localhost}
+      PHX_SCHEME: ${PHX_SCHEME:-http}
+      PHX_PUBLIC_PORT: ${PHX_PUBLIC_PORT:-4000}
+      EMBEDDINGS_BACKEND: ${EMBEDDINGS_BACKEND:-bumblebee}
+      NER_BACKEND: ${NER_BACKEND:-rules}
+      ANSWER_BACKEND: extractive
+      DEMO_MODE: "true"
+      SEED_DEMO: "true"
+    volumes:
+      - app_data:/data
+      - models:/cache
+    restart: unless-stopped
+
+volumes:
+  meili_data:
+  app_data:
+  models:

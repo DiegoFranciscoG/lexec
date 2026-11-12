@@ -1,0 +1,16 @@
+.git
+.github
+_build
+deps
+cover
+doc
+tmp
+data
+models
+*.db
+*.db-*
+.env
+.env.*
+priv/static/assets
+.elixir_ls
+.hallmark

@@ -1,0 +1,12 @@
+#!/bin/sh
+# Runs migrations, optionally loads the fictitious demo corpus, then starts the server.
+set -eu
+cd -P -- "$(dirname -- "$0")"
+
+env -u PHX_SERVER ./lexec eval "Lexec.Release.migrate()"
+
+if [ "${SEED_DEMO:-false}" = "true" ]; then
+  env -u PHX_SERVER ./lexec eval "Lexec.Release.seed_demo()"
+fi
+
+PHX_SERVER=true exec ./lexec start

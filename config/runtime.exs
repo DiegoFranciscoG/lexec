@@ -49,11 +49,13 @@ if config_env() != :test do
         "extractive"
       )
 
-  if System.get_env("DEMO_MODE") do
+  if System.get_env("DEMO_MODE", "") != "" do
     config :lexec, demo_mode: System.get_env("DEMO_MODE") == "true"
   end
 
-  if meili_url = System.get_env("MEILI_URL") do
+  meili_url = System.get_env("MEILI_URL", "")
+
+  if meili_url != "" do
     config :lexec, :index, Lexec.Index.Meili
 
     config :lexec, Lexec.Index.Meili,
