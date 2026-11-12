@@ -1,0 +1,94 @@
+[
+  {
+    "file": "9101-20-EP-23.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9101-20-EP-23.pdf",
+    "flags": []
+  },
+  {
+    "file": "9102-21-EP-24.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9102-21-EP-24.pdf",
+    "flags": []
+  },
+  {
+    "file": "9103-19-EP-22.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9103-19-EP-22.pdf",
+    "flags": []
+  },
+  {
+    "file": "9104-22-EP-24.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9104-22-EP-24.pdf",
+    "flags": []
+  },
+  {
+    "file": "9105-18-EP-21.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9105-18-EP-21.pdf",
+    "flags": []
+  },
+  {
+    "file": "9106-20-JP-23.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9106-20-JP-23.pdf",
+    "flags": []
+  },
+  {
+    "file": "9107-21-EP-23.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9107-21-EP-23.pdf",
+    "flags": []
+  },
+  {
+    "file": "9108-19-IN-22.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9108-19-IN-22.pdf",
+    "flags": []
+  },
+  {
+    "file": "9109-22-EP-25.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9109-22-EP-25.pdf",
+    "flags": []
+  },
+  {
+    "file": "9110-20-EP-24.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9110-20-EP-24.pdf",
+    "flags": []
+  },
+  {
+    "file": "9111-23-EP-25.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9111-23-EP-25.pdf",
+    "flags": []
+  },
+  {
+    "file": "9112-21-CN-23.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9112-21-CN-23.pdf",
+    "flags": []
+  },
+  {
+    "file": "9113-19-EP-23.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9113-19-EP-23.pdf",
+    "flags": []
+  },
+  {
+    "file": "9114-22-EP-24.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9114-22-EP-24.pdf",
+    "flags": []
+  },
+  {
+    "file": "9115-20-EP-22.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9115-20-EP-22.pdf",
+    "flags": []
+  },
+  {
+    "file": "9116-21-EP-25.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9116-21-EP-25.pdf",
+    "flags": []
+  },
+  {
+    "file": "9117-22-EP-24.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9117-22-EP-24.pdf",
+    "flags": [],
+    "expected_exclusion": "minors"
+  },
+  {
+    "file": "9118-21-EP-23.txt",
+    "url": "https://demo.lexec.invalid/sentencias/9118-21-EP-23.pdf",
+    "flags": [],
+    "expected_exclusion": "violence"
+  }
+]
