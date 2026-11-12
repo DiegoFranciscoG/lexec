@@ -29,7 +29,14 @@ defmodule Lexec.HarvestTest do
   # Serves robots.txt and PDFs, logging every request with a monotonic timestamp.
   defp stub_server(log, routes) do
     Req.Test.stub(Lexec.Harvest.Fetcher, fn conn ->
-      Agent.update(log, &[{conn.request_path, System.monotonic_time(:millisecond), Plug.Conn.get_req_header(conn, "user-agent")} | &1])
+      Agent.update(
+        log,
+        &[
+          {conn.request_path, System.monotonic_time(:millisecond),
+           Plug.Conn.get_req_header(conn, "user-agent")}
+          | &1
+        ]
+      )
 
       case Map.get(routes, conn.request_path) do
         nil -> Plug.Conn.send_resp(conn, 404, "not found")
@@ -42,7 +49,9 @@ defmodule Lexec.HarvestTest do
   defp entries(paths), do: Enum.map(paths, &%{url: @base <> &1, flags: []})
 
   describe "T-07 respectful harvesting" do
-    test "never more than one request per second, with a User-Agent that has a contact", %{log: log} do
+    test "never more than one request per second, with a User-Agent that has a contact", %{
+      log: log
+    } do
       routes =
         for i <- 1..3, into: %{"/robots.txt" => {200, "User-agent: *\nDisallow: /privado/\n"}} do
           {"/s#{i}.pdf", {200, pdf_for("93#{i}0-22-EP/24", ["Contenido del párrafo #{i}."])}}
@@ -69,7 +78,8 @@ defmodule Lexec.HarvestTest do
 
     test "respects robots.txt and records the refusal", %{log: log} do
       stub_server(log, %{
-        "/robots.txt" => {200, "User-agent: *\nDisallow: /privado/\nAllow: /privado/publico.pdf\n"},
+        "/robots.txt" =>
+          {200, "User-agent: *\nDisallow: /privado/\nAllow: /privado/publico.pdf\n"},
         "/privado/publico.pdf" => {200, pdf_for("9340-22-EP/24", ["Texto permitido."])}
       })
 
@@ -83,7 +93,12 @@ defmodule Lexec.HarvestTest do
 
     test "never downloads the same URL or the same PDF twice", %{log: log} do
       pdf = pdf_for("9350-22-EP/24", ["Texto único."])
-      stub_server(log, %{"/robots.txt" => {404, ""}, "/a.pdf" => {200, pdf}, "/copia.pdf" => {200, pdf}})
+
+      stub_server(log, %{
+        "/robots.txt" => {404, ""},
+        "/a.pdf" => {200, pdf},
+        "/copia.pdf" => {200, pdf}
+      })
 
       first = Harvest.run(entries(["/a.pdf"]))
       assert [{_, :published}] = first.ok
@@ -114,9 +129,13 @@ defmodule Lexec.HarvestTest do
         "/ok2.pdf" => {200, pdf_for("9362-22-EP/24", ["Segundo documento válido."])}
       })
 
-      summary = Harvest.run(entries(["/ok1.pdf", "/roto.pdf", "/html.pdf", "/caido.pdf", "/ok2.pdf"]))
+      summary =
+        Harvest.run(entries(["/ok1.pdf", "/roto.pdf", "/html.pdf", "/caido.pdf", "/ok2.pdf"]))
 
-      assert Enum.sort(Enum.map(summary.ok, &elem(&1, 0))) == [@base <> "/ok1.pdf", @base <> "/ok2.pdf"]
+      assert Enum.sort(Enum.map(summary.ok, &elem(&1, 0))) == [
+               @base <> "/ok1.pdf",
+               @base <> "/ok2.pdf"
+             ]
 
       failed = Map.new(summary.failed)
       assert failed[@base <> "/html.pdf"] == :not_a_pdf
@@ -135,7 +154,10 @@ defmodule Lexec.HarvestTest do
         "/robots.txt" => {404, ""},
         "/lento.pdf" => fn conn ->
           n = Agent.get_and_update(attempts, &{&1 + 1, &1 + 1})
-          if n < 3, do: Plug.Conn.send_resp(conn, 503, "busy"), else: Plug.Conn.send_resp(conn, 200, pdf)
+
+          if n < 3,
+            do: Plug.Conn.send_resp(conn, 503, "busy"),
+            else: Plug.Conn.send_resp(conn, 200, pdf)
         end
       })
 
@@ -147,7 +169,9 @@ defmodule Lexec.HarvestTest do
       stub_server(log, %{
         "/robots.txt" => {404, ""},
         "/viejo.pdf" => fn conn ->
-          conn |> Plug.Conn.put_resp_header("location", "/nuevo.pdf") |> Plug.Conn.send_resp(301, "")
+          conn
+          |> Plug.Conn.put_resp_header("location", "/nuevo.pdf")
+          |> Plug.Conn.send_resp(301, "")
         end,
         "/nuevo.pdf" => {200, pdf_for("9380-22-EP/24", ["Movido."])}
       })
@@ -156,7 +180,8 @@ defmodule Lexec.HarvestTest do
     end
 
     test "invalid URLs fail fast" do
-      assert %{failed: [{"ftp://x/y.pdf", :invalid_url}]} = Harvest.run([%{url: "ftp://x/y.pdf", flags: []}])
+      assert %{failed: [{"ftp://x/y.pdf", :invalid_url}]} =
+               Harvest.run([%{url: "ftp://x/y.pdf", flags: []}])
     end
   end
 
@@ -166,7 +191,9 @@ defmodule Lexec.HarvestTest do
     test "loads JSON entries", %{tmp_dir: dir} do
       path = Path.join(dir, "m.json")
       File.write!(path, ~s([{"url": "https://a.test/1.pdf", "flags": ["minors"]}]))
-      assert {:ok, [%{url: "https://a.test/1.pdf", flags: ["minors"], case_number: nil}]} = Harvest.load_manifest(path)
+
+      assert {:ok, [%{url: "https://a.test/1.pdf", flags: ["minors"], case_number: nil}]} =
+               Harvest.load_manifest(path)
 
       File.write!(path, ~s({"url": 1}))
       assert {:error, :manifest_must_be_a_list} = Harvest.load_manifest(path)

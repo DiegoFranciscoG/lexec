@@ -8,7 +8,10 @@ defmodule Lexec.CorpusCase do
     |> Enum.filter(fn entry -> files == :all or entry["file"] in files end)
     |> Enum.map(fn entry ->
       {entry["file"],
-       Ingest.ingest(Fixtures.corpus_text(entry["file"]), %{url: entry["url"], flags: entry["flags"]})}
+       Ingest.ingest(Fixtures.corpus_text(entry["file"]), %{
+         url: entry["url"],
+         flags: entry["flags"]
+       })}
     end)
   end
 end

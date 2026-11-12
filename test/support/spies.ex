@@ -21,7 +21,9 @@ defmodule Lexec.Spy do
   def all_text do
     __MODULE__
     |> Agent.get(& &1)
-    |> Enum.map_join("\n", fn {_k, payload} -> inspect(payload, limit: :infinity, printable_limit: :infinity) end)
+    |> Enum.map_join("\n", fn {_k, payload} ->
+      inspect(payload, limit: :infinity, printable_limit: :infinity)
+    end)
   end
 
   @doc "Swaps backends for the duration of a test and restores them afterwards."
@@ -76,6 +78,8 @@ defmodule Lexec.Spy.Index do
   @moduledoc "Index double: records documents and deletions, searches via the SQL backend."
   @behaviour Lexec.Index
 
+  alias Lexec.Index.Sql
+
   @impl true
   def setup, do: :ok
 
@@ -95,5 +99,5 @@ defmodule Lexec.Spy.Index do
   def reset, do: :ok
 
   @impl true
-  def search(query, opts), do: Lexec.Index.Sql.search(query, opts)
+  def search(query, opts), do: Sql.search(query, opts)
 end

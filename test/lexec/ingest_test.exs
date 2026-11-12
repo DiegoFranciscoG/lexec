@@ -2,7 +2,16 @@ defmodule Lexec.IngestTest do
   # T-01: excluded rulings never reach NER, embeddings, the index or a generator.
   use Lexec.DataCase, async: false
 
-  alias Lexec.Catalog.{AnonymizationStat, Citation, CitedNorm, Exclusion, Paragraph, ReviewItem, Ruling}
+  alias Lexec.Catalog.{
+    AnonymizationStat,
+    Citation,
+    CitedNorm,
+    Exclusion,
+    Paragraph,
+    ReviewItem,
+    Ruling
+  }
+
   alias Lexec.{CorpusCase, Fixtures, Ingest, Spy}
 
   setup do
@@ -77,7 +86,13 @@ defmodule Lexec.IngestTest do
     refute joined =~ "rosa.cando@"
     assert joined =~ "[PERSONA 1]"
 
-    stats = Repo.all(from s in AnonymizationStat, where: s.ruling_id == ^ruling.id, select: {s.entity_type, s.count})
+    stats =
+      Repo.all(
+        from s in AnonymizationStat,
+          where: s.ruling_id == ^ruling.id,
+          select: {s.entity_type, s.count}
+      )
+
     assert {"id_number", 1} in stats
     assert {"email", 1} in stats
     assert {"phone", 1} in stats
@@ -86,7 +101,10 @@ defmodule Lexec.IngestTest do
     cited = Repo.get_by!(Ruling, case_number: "9105-18-EP/21")
     assert Repo.get_by!(Citation, citing_ruling_id: ruling.id).cited_ruling_id == cited.id
 
-    assert Repo.exists?(from n in CitedNorm, where: n.ruling_id == ^ruling.id and n.norm_body == "CRE" and n.article == "332")
+    assert Repo.exists?(
+             from n in CitedNorm,
+               where: n.ruling_id == ^ruling.id and n.norm_body == "CRE" and n.article == "332"
+           )
 
     # Index documents carry metadata and the 3-d spy embedding.
     [docs | _] =
@@ -94,7 +112,11 @@ defmodule Lexec.IngestTest do
       |> Enum.filter(fn docs -> hd(docs)["case_number"] == "9101-20-EP/23" end)
 
     assert length(docs) == 7
-    assert %{"_vectors" => %{"e5" => [_, _, _]}, "official_url" => "https://demo.lexec.invalid/" <> _} = hd(docs)
+
+    assert %{
+             "_vectors" => %{"e5" => [_, _, _]},
+             "official_url" => "https://demo.lexec.invalid/" <> _
+           } = hd(docs)
   end
 
   test "ingesting twice is a no-op and withdrawn rulings are never re-ingested" do
@@ -116,7 +138,8 @@ defmodule Lexec.IngestTest do
   end
 
   test "documents without a ruling number or paragraphs are rejected" do
-    assert {:error, :missing_case_number} = Ingest.ingest("1. Párrafo sin metadatos.", %{url: "https://x.invalid/a"})
+    assert {:error, :missing_case_number} =
+             Ingest.ingest("1. Párrafo sin metadatos.", %{url: "https://x.invalid/a"})
 
     text = "Sentencia No. 9301-22-EP/24\nSin párrafos numerados."
     assert {:error, :no_paragraphs} = Ingest.ingest(text, %{url: "https://x.invalid/b"})

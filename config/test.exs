@@ -9,6 +9,7 @@ config :lexec, Lexec.Repo,
   database: Path.expand("../lexec_test.db", __DIR__),
   pool_size: 5,
   busy_timeout: 10_000,
+  ownership_timeout: 900_000,
   pool: Ecto.Adapters.SQL.Sandbox
 
 # We don't run a server during test. If one is required,

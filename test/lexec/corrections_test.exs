@@ -2,8 +2,8 @@ defmodule Lexec.CorrectionsTest do
   # T-11: a withdrawal request removes the content from the index and the catalog.
   use Lexec.DataCase, async: false
 
+  alias Lexec.{Catalog, CorpusCase, Corrections, Index, Review, Spy}
   alias Lexec.Catalog.{Citation, Paragraph, Ruling}
-  alias Lexec.{Catalog, Corrections, CorpusCase, Index, Review, Spy}
 
   setup do
     Spy.reset()
@@ -38,7 +38,11 @@ defmodule Lexec.CorrectionsTest do
       assert Catalog.get_published_ruling(ruling.id) == nil
 
       # Rulings that cited it keep the public case number but lose the link.
-      assert Repo.all(from c in Citation, where: c.cited_case_number == "9105-18-EP/21", select: c.cited_ruling_id)
+      assert Repo.all(
+               from c in Citation,
+                 where: c.cited_case_number == "9105-18-EP/21",
+                 select: c.cited_ruling_id
+             )
              |> Enum.all?(&is_nil/1)
 
       assert {:error, :already_resolved} = Corrections.resolve(request.id, :reject)
@@ -74,11 +78,18 @@ defmodule Lexec.CorrectionsTest do
 
       assert {:ok, r} = Corrections.create_request(Map.put(attrs, "consent", "true"))
       assert r.contact_email == "persona@example.org"
+
+      # The address is erased when the request is closed.
+      assert {:ok, %{contact_email: nil}} = Corrections.resolve(r.id, :reject)
     end
 
     test "rejects bad case numbers, short reasons and unknown types" do
       assert {:error, cs} =
-               Corrections.create_request(%{"case_number" => "abc", "request_type" => "x", "reason" => "corto"})
+               Corrections.create_request(%{
+                 "case_number" => "abc",
+                 "request_type" => "x",
+                 "reason" => "corto"
+               })
 
       errors = errors_on(cs)
       assert errors.case_number
@@ -105,19 +116,31 @@ defmodule Lexec.CorrectionsTest do
       ruling |> Ecto.Changeset.change(status: "pending_review") |> Repo.update!()
 
       item =
-        Repo.insert!(%Lexec.Catalog.ReviewItem{ruling_id: ruling.id, reason: "ner_low_confidence:1", status: "pending"})
+        Repo.insert!(%Lexec.Catalog.ReviewItem{
+          ruling_id: ruling.id,
+          reason: "ner_low_confidence:1",
+          status: "pending"
+        })
 
       assert [%{case_number: "9110-20-EP/24"}] = Review.list_pending()
       assert [%{number: 1} | _] = Review.pending_paragraphs(ruling.id)
 
-      assert {:ok, %{status: "approved", reviewer: "revisor"}} = Review.approve(item.id, "revisor")
+      assert {:ok, %{status: "approved", reviewer: "revisor"}} =
+               Review.approve(item.id, "revisor")
+
       assert Repo.get!(Ruling, ruling.id).status == "published"
       assert [_docs] = Spy.calls(:index_upsert)
       assert {:error, :already_resolved} = Review.withdraw(item.id, "revisor")
 
       ruling2 = Repo.get_by!(Ruling, case_number: "9111-23-EP/25")
       ruling2 |> Ecto.Changeset.change(status: "pending_review") |> Repo.update!()
-      item2 = Repo.insert!(%Lexec.Catalog.ReviewItem{ruling_id: ruling2.id, reason: "x", status: "pending"})
+
+      item2 =
+        Repo.insert!(%Lexec.Catalog.ReviewItem{
+          ruling_id: ruling2.id,
+          reason: "x",
+          status: "pending"
+        })
 
       assert {:ok, %{status: "withdrawn"}} = Review.withdraw(item2.id, "revisor")
       assert Repo.get!(Ruling, ruling2.id).status == "withdrawn"

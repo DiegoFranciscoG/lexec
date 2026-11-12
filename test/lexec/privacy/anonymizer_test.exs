@@ -3,8 +3,8 @@ defmodule Lexec.Privacy.AnonymizerTest do
   use ExUnit.Case, async: false
   use ExUnitProperties
 
-  alias Lexec.Privacy.Anonymizer
   alias Lexec.{Fixtures, Rules}
+  alias Lexec.Privacy.Anonymizer
 
   @items Fixtures.json_fixture("ner_paragraphs.json")
 
@@ -22,7 +22,8 @@ defmodule Lexec.Privacy.AnonymizerTest do
     end
 
     test "person recall (rules only) reaches the configured minimum" do
-      persons = Enum.flat_map(@items, fn item -> Enum.map(item["persons"], &{item["text"], &1}) end)
+      persons =
+        Enum.flat_map(@items, fn item -> Enum.map(item["persons"], &{item["text"], &1}) end)
 
       found =
         Enum.count(persons, fn {text, name} ->
@@ -40,7 +41,10 @@ defmodule Lexec.Privacy.AnonymizerTest do
       %{paragraphs: [p1, p2], stats: stats} =
         Anonymizer.anonymize([
           %{number: 1, text: "La señora Ana Lucía Pazmiño Rivas presentó la demanda."},
-          %{number: 2, text: "Luego Pazmiño Rivas apeló. El señor Jorge Enrique Cueva Granda contestó."}
+          %{
+            number: 2,
+            text: "Luego Pazmiño Rivas apeló. El señor Jorge Enrique Cueva Granda contestó."
+          }
         ])
 
       assert p1.text == "La señora [PERSONA 1] presentó la demanda."
@@ -49,7 +53,11 @@ defmodule Lexec.Privacy.AnonymizerTest do
     end
 
     test "only the address value is replaced" do
-      out = Anonymizer.anonymize_text("Vive con domicilio en la calle Olmedo 3-21 y Larga, en Cuenca.")
+      out =
+        Anonymizer.anonymize_text(
+          "Vive con domicilio en la calle Olmedo 3-21 y Larga, en Cuenca."
+        )
+
       assert out == "Vive con domicilio en [DIRECCIÓN], en Cuenca."
     end
 
@@ -62,12 +70,18 @@ defmodule Lexec.Privacy.AnonymizerTest do
   property "T-02 no 10-digit ID number survives, whatever the separators" do
     sep = StreamData.member_of(["", "", "-", " ", "."])
 
-    check all digits <- StreamData.list_of(StreamData.integer(0..9), length: 10),
-              seps <- StreamData.list_of(sep, length: 9),
-              prefix <- StreamData.member_of(["cédula ", "C.I. ", "número ", "", "identificado con "]) do
+    check all(
+            digits <- StreamData.list_of(StreamData.integer(0..9), length: 10),
+            seps <- StreamData.list_of(sep, length: 9),
+            prefix <-
+              StreamData.member_of(["cédula ", "C.I. ", "número ", "", "identificado con "])
+          ) do
       [first | rest] = Enum.map(digits, &Integer.to_string/1)
       number = Enum.zip(seps, rest) |> Enum.reduce(first, fn {s, d}, acc -> acc <> s <> d end)
-      out = Anonymizer.anonymize_text("El ciudadano presentó su #{prefix}#{number} en la audiencia.")
+
+      out =
+        Anonymizer.anonymize_text("El ciudadano presentó su #{prefix}#{number} en la audiencia.")
+
       refute out =~ ~r/(?:\d[\s.-]?){9}\d/, out
     end
   end
@@ -95,7 +109,9 @@ defmodule Lexec.Privacy.AnonymizerTest do
     end
 
     test "case numbers, articles and dates are not mistaken for personal data" do
-      text = "Según la sentencia 9105-18-EP/21, el artículo 76 numeral 7 rige desde el 20 de octubre de 2008."
+      text =
+        "Según la sentencia 9105-18-EP/21, el artículo 76 numeral 7 rige desde el 20 de octubre de 2008."
+
       assert Anonymizer.anonymize_text(text) == text
     end
   end
@@ -104,7 +120,12 @@ defmodule Lexec.Privacy.AnonymizerTest do
     setup do
       Lexec.Spy.reset()
       Lexec.Spy.use_backends(ner: Lexec.Spy.Ner)
-      Application.put_env(:lexec, :spy_ner_names, [{"Mónica Alexandra Naranjo Vela", 0.99}, {"Fabián Marcelo Cueva", 0.42}])
+
+      Application.put_env(:lexec, :spy_ner_names, [
+        {"Mónica Alexandra Naranjo Vela", 0.99},
+        {"Fabián Marcelo Cueva", 0.42}
+      ])
+
       on_exit(fn -> Application.delete_env(:lexec, :spy_ner_names) end)
     end
 
@@ -114,7 +135,11 @@ defmodule Lexec.Privacy.AnonymizerTest do
     end
 
     test "low-confidence entities send the ruling to review" do
-      result = Anonymizer.anonymize([%{number: 1, text: "Declaró Fabián Marcelo Cueva en la audiencia."}])
+      result =
+        Anonymizer.anonymize([
+          %{number: 1, text: "Declaró Fabián Marcelo Cueva en la audiencia."}
+        ])
+
       assert result.review_reasons == ["ner_low_confidence:1"]
     end
   end

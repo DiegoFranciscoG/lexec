@@ -59,6 +59,7 @@ defmodule Lexec.Privacy.Anonymizer do
       |> Enum.uniq()
       |> Enum.filter(&person_candidate?/1)
       |> Enum.reject(&MapSet.member?(authorities, &1))
+
     {texts, person_count} = replace_names(texts, names)
 
     stats = if person_count > 0, do: Map.put(stats, "person", person_count), else: stats

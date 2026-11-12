@@ -64,8 +64,15 @@ defmodule Lexec.Harvest.Robots do
       end)
       |> group()
 
-    specific = Enum.filter(groups, fn {agents, _} -> Enum.any?(agents, &(&1 != "*" and String.starts_with?(token, &1))) end)
-    chosen = if specific != [], do: specific, else: Enum.filter(groups, fn {agents, _} -> "*" in agents end)
+    specific =
+      Enum.filter(groups, fn {agents, _} ->
+        Enum.any?(agents, &(&1 != "*" and String.starts_with?(token, &1)))
+      end)
+
+    chosen =
+      if specific != [],
+        do: specific,
+        else: Enum.filter(groups, fn {agents, _} -> "*" in agents end)
 
     case Enum.flat_map(chosen, &elem(&1, 1)) do
       [] -> :allow_all
@@ -106,7 +113,9 @@ defmodule Lexec.Harvest.Robots do
   def allowed_by?(rules, path) do
     rules
     |> Enum.filter(fn {_kind, pattern} -> matches?(pattern, path) end)
-    |> Enum.sort_by(fn {kind, pattern} -> {-String.length(pattern), if(kind == :allow, do: 0, else: 1)} end)
+    |> Enum.sort_by(fn {kind, pattern} ->
+      {-String.length(pattern), if(kind == :allow, do: 0, else: 1)}
+    end)
     |> case do
       [] -> true
       [{kind, _} | _] -> kind == :allow

@@ -14,8 +14,8 @@ defmodule Lexec.Ingest do
   alias Lexec.Catalog.{AnonymizationStat, Citation, CitedNorm, Paragraph, ReviewItem, Ruling}
   alias Lexec.Catalog.Exclusion, as: ExclusionRecord
   alias Lexec.Extract.Parser
-  alias Lexec.Privacy.{Anonymizer, Exclusion, Ner}
   alias Lexec.{Index, Relations, Repo, Rules}
+  alias Lexec.Privacy.{Anonymizer, Exclusion, Ner}
 
   @type source :: %{
           required(:url) => String.t(),
@@ -55,7 +55,9 @@ defmodule Lexec.Ingest do
         {:error, :no_paragraphs}
 
       existing = Repo.get_by(Ruling, case_number: case_number) ->
-        if existing.status == "withdrawn", do: {:skipped, :withdrawn}, else: {:skipped, :duplicate}
+        if existing.status == "withdrawn",
+          do: {:skipped, :withdrawn},
+          else: {:skipped, :duplicate}
 
       true ->
         process(%{doc | case_number: case_number}, source)

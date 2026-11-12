@@ -140,7 +140,8 @@ defmodule Lexec.Harvest do
     end
   end
 
-  defp collect(0, acc, _timeout), do: %{ok: Enum.reverse(acc.ok), failed: Enum.reverse(acc.failed)}
+  defp collect(0, acc, _timeout),
+    do: %{ok: Enum.reverse(acc.ok), failed: Enum.reverse(acc.failed)}
 
   defp collect(remaining, acc, timeout) do
     receive do

@@ -9,7 +9,10 @@ defmodule Lexec.Models do
   def children do
     embeddings =
       if Application.fetch_env!(:lexec, :embeddings) == Lexec.Embeddings.Bumblebee,
-        do: [{Nx.Serving, serving: embedding_serving(), name: Lexec.EmbeddingServing, batch_timeout: 50}],
+        do: [
+          {Nx.Serving,
+           serving: embedding_serving(), name: Lexec.EmbeddingServing, batch_timeout: 50}
+        ],
         else: []
 
     ner =

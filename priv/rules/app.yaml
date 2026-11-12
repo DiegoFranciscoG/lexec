@@ -27,6 +27,12 @@ rate_limits:
   correction:
     limit: 3
     window_seconds: 3600
+  page:
+    limit: 120
+    window_seconds: 60
+  admin_auth:
+    limit: 20
+    window_seconds: 900
 
 harvest:
   # Recopilación respetuosa: como máximo una petición por segundo

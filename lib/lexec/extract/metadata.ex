@@ -61,9 +61,14 @@ defmodule Lexec.Extract.Metadata do
 
   def ruling_year(number) do
     cond do
-      match = Regex.run(~r/\/(\d{2})$/u, number) -> 2000 + String.to_integer(Enum.at(match, 1))
-      match = Regex.run(~r/^\d{3}-(\d{2})-S[A-Z]{2,3}-CC$/u, number) -> 2000 + String.to_integer(Enum.at(match, 1))
-      true -> nil
+      match = Regex.run(~r/\/(\d{2})$/u, number) ->
+        2000 + String.to_integer(Enum.at(match, 1))
+
+      match = Regex.run(~r/^\d{3}-(\d{2})-S[A-Z]{2,3}-CC$/u, number) ->
+        2000 + String.to_integer(Enum.at(match, 1))
+
+      true ->
+        nil
     end
   end
 

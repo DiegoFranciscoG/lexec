@@ -59,7 +59,8 @@ defmodule Lexec.Index.Sql do
       |> Repo.all()
       |> Enum.map(fn {p, r} -> r |> Index.document(p) |> Index.to_hit() end)
 
-    {:ok, %{hits: if(terms == [], do: [], else: hits), total: if(terms == [], do: 0, else: total)}}
+    {:ok,
+     %{hits: if(terms == [], do: [], else: hits), total: if(terms == [], do: 0, else: total)}}
   end
 
   defp apply_filters(query, filters) do

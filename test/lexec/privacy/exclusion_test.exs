@@ -12,7 +12,8 @@ defmodule Lexec.Privacy.ExclusionTest do
     assert {:exclude, "violence", "violence-keywords"} =
              Exclusion.evaluate(%{text: "Proceso por violencia intrafamiliar."})
 
-    assert {:exclude, "reserved", _} = Exclusion.evaluate(%{text: "Contiene información reservada."})
+    assert {:exclude, "reserved", _} =
+             Exclusion.evaluate(%{text: "Contiene información reservada."})
   end
 
   test "metadata flags and Court-flagged case numbers exclude without reading text" do
@@ -23,7 +24,10 @@ defmodule Lexec.Privacy.ExclusionTest do
   end
 
   test "ordinary rulings pass" do
-    assert Exclusion.evaluate(%{text: "Despido de una trabajadora embarazada.", action_type: "EP"}) ==
+    assert Exclusion.evaluate(%{
+             text: "Despido de una trabajadora embarazada.",
+             action_type: "EP"
+           }) ==
              :ok
   end
 

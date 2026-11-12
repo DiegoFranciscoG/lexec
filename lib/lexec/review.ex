@@ -2,8 +2,8 @@ defmodule Lexec.Review do
   @moduledoc "Human review queue: rulings with doubtful anonymization wait here."
 
   import Ecto.Query
-  alias Lexec.Catalog.{ReviewItem, Ruling}
   alias Lexec.{Catalog, Repo}
+  alias Lexec.Catalog.{ReviewItem, Ruling}
 
   @spec list_pending() :: [map()]
   def list_pending do
@@ -30,10 +30,10 @@ defmodule Lexec.Review do
     )
   end
 
-  @spec approve(integer(), String.t()) :: {:ok, %ReviewItem{}} | {:error, term()}
+  @spec approve(integer(), String.t()) :: {:ok, ReviewItem.t()} | {:error, term()}
   def approve(item_id, reviewer), do: resolve(item_id, reviewer, "approved")
 
-  @spec withdraw(integer(), String.t()) :: {:ok, %ReviewItem{}} | {:error, term()}
+  @spec withdraw(integer(), String.t()) :: {:ok, ReviewItem.t()} | {:error, term()}
   def withdraw(item_id, reviewer), do: resolve(item_id, reviewer, "withdrawn")
 
   defp resolve(item_id, reviewer, status) do

@@ -51,11 +51,14 @@ defmodule Lexec.Fixtures do
 
     pages
     |> Enum.with_index(1)
-    |> Enum.map(fn {lines, page} ->
+    |> Enum.map_join("\n\f", fn {lines, page} ->
       header = if page > 1, do: ["CORTE CONSTITUCIONAL DEL ECUADOR"], else: []
-      Enum.join(header ++ lines ++ ["", "www.corteconstitucional.gob.ec", "Página #{page} de #{total}"], "\n")
+
+      Enum.join(
+        header ++ lines ++ ["", "www.corteconstitucional.gob.ec", "Página #{page} de #{total}"],
+        "\n"
+      )
     end)
-    |> Enum.join("\n\f")
   end
 
   defp decision do
@@ -74,7 +77,10 @@ defmodule Lexec.Fixtures do
       "",
       fn word, acc ->
         candidate = String.trim(acc <> " " <> word)
-        if String.length(candidate) > 80 and acc != "", do: {:cont, acc, word}, else: {:cont, candidate}
+
+        if String.length(candidate) > 80 and acc != "",
+          do: {:cont, acc, word},
+          else: {:cont, candidate}
       end,
       fn acc -> {:cont, acc, ""} end
     )
@@ -118,7 +124,10 @@ defmodule Lexec.Fixtures do
         {2, "<< /Type /Pages /Kids [#{kids}] /Count #{page_count} >>"}
       ] ++
         page_objs ++
-        [{font_id, "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>"}]
+        [
+          {font_id,
+           "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica /Encoding /WinAnsiEncoding >>"}
+        ]
 
     header = "%PDF-1.4\n"
 
@@ -133,7 +142,9 @@ defmodule Lexec.Fixtures do
     xref =
       offsets
       |> Enum.sort()
-      |> Enum.map_join("", fn {_id, off} -> String.pad_leading("#{off}", 10, "0") <> " 00000 n \n" end)
+      |> Enum.map_join("", fn {_id, off} ->
+        String.pad_leading("#{off}", 10, "0") <> " 00000 n \n"
+      end)
 
     body <>
       "xref\n0 #{count}\n0000000000 65535 f \n" <>

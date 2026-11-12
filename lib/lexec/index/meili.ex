@@ -43,10 +43,13 @@ defmodule Lexec.Index.Meili do
 
   @impl true
   def reset do
-    case request(:delete, "/indexes/#{index_uid()}") do
-      {:ok, task} -> wait_task(task)
+    # Deletion is asynchronous: a missing index shows up as a failed task.
+    with {:ok, task} <- request(:delete, "/indexes/#{index_uid()}"),
+         {:error, {:task_failed, %{"code" => "index_not_found"}}} <- wait_task(task) do
+      :ok
+    else
       {:error, {:http, 404, _}} -> :ok
-      error -> error
+      other -> other
     end
   end
 
@@ -124,9 +127,18 @@ defmodule Lexec.Index.Meili do
         {:ok, index}
 
       {:error, {:http, 404, _}} ->
-        with {:ok, task} <- request(:post, "/indexes", json: %{uid: uid, primaryKey: "id"}),
-             :ok <- wait_task(task) do
-          {:ok, %{"uid" => uid}}
+        with {:ok, task} <- request(:post, "/indexes", json: %{uid: uid, primaryKey: "id"}) do
+          # Two processes may race to create it; "already exists" is success too.
+          case wait_task(task) do
+            :ok ->
+              {:ok, %{"uid" => uid}}
+
+            {:error, {:task_failed, %{"code" => "index_already_exists"}}} ->
+              {:ok, %{"uid" => uid}}
+
+            error ->
+              error
+          end
         end
 
       error ->

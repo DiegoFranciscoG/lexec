@@ -1,11 +1,5 @@
-# Script for populating the database. You can run it as:
-#
-#     mix run priv/repo/seeds.exs
-#
-# Inside the script, you can read and write to any of your
-# repositories directly:
-#
-#     Lexec.Repo.insert!(%Lexec.SomeSchema{})
-#
-# We recommend using the bang functions (`insert!`, `update!`
-# and so on) as they will fail if something goes wrong.
+# Loads the FICTITIOUS demo corpus through the real pipeline (mix run priv/repo/seeds.exs).
+# No real person, ID number or ruling appears in these files.
+Lexec.Demo.seed()
+|> Enum.sort()
+|> Enum.each(fn {file, outcome} -> IO.puts("#{file}: #{outcome}") end)

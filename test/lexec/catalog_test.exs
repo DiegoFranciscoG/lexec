@@ -76,7 +76,9 @@ defmodule Lexec.CatalogTest do
       {:ok, %{hits: in_hits}} = Index.search("tasa", filters: %{action_type: "IN"})
       assert Enum.all?(in_hits, &(&1.action_type == "IN"))
 
-      {:ok, %{hits: year_hits}} = Index.search("Corte", filters: %{year_from: 2025, year_to: 2025})
+      {:ok, %{hits: year_hits}} =
+        Index.search("Corte", filters: %{year_from: 2025, year_to: 2025})
+
       assert Enum.all?(year_hits, &(&1.ruling_year == 2025))
 
       {:ok, %{hits: r_hits}} = Index.search("Corte", filters: %{rapporteur: "Elena Paredes Loja"})

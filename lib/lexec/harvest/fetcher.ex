@@ -25,7 +25,8 @@ defmodule Lexec.Harvest.Fetcher do
   @redirects [301, 302, 303, 307, 308]
 
   # Redirects are followed by hand so every hop is paced by the throttle too.
-  defp do_get(_url, _retries_left, _backoff, _config, _attempt, -1), do: {:error, :too_many_redirects}
+  defp do_get(_url, _retries_left, _backoff, _config, _attempt, -1),
+    do: {:error, :too_many_redirects}
 
   defp do_get(url, retries_left, backoff, config, attempt, redirects_left) do
     Throttle.wait()

@@ -6,6 +6,8 @@ defmodule Lexec.Corrections.Request do
   use Ecto.Schema
   import Ecto.Changeset
 
+  @type t :: %__MODULE__{}
+
   @types ~w(correction withdrawal)
   @statuses ~w(received withdrawn corrected rejected)
 
@@ -30,17 +32,28 @@ defmodule Lexec.Corrections.Request do
     config = Lexec.Rules.fetch!(:app, ["corrections"])
 
     request
-    |> cast(attrs, [:case_number, :paragraph_number, :request_type, :reason, :contact_email, :consent])
+    |> cast(attrs, [
+      :case_number,
+      :paragraph_number,
+      :request_type,
+      :reason,
+      :contact_email,
+      :consent
+    ])
     |> update_change(:case_number, &(&1 && String.trim(&1)))
     |> update_change(:contact_email, &blank_to_nil/1)
     |> validate_required([:case_number, :request_type, :reason])
-    |> validate_format(:case_number, ~r/^(\d{1,5}-\d{2}-[A-Z]{2}\/\d{2}|\d{3}-\d{2}-S[A-Z]{2,3}-CC)$/,
+    |> validate_format(
+      :case_number,
+      ~r/^(\d{1,5}-\d{2}-[A-Z]{2}\/\d{2}|\d{3}-\d{2}-S[A-Z]{2,3}-CC)$/,
       message: "use el formato 1234-19-EP/23"
     )
     |> validate_inclusion(:request_type, @types)
     |> validate_length(:reason, min: config["reason_min"], max: config["reason_max"])
     |> validate_number(:paragraph_number, greater_than: 0, less_than: 10_000)
-    |> validate_format(:contact_email, ~r/^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "correo no válido")
+    |> validate_format(:contact_email, ~r/^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+      message: "correo no válido"
+    )
     |> validate_length(:contact_email, max: 160)
     |> validate_consent()
   end
@@ -67,13 +80,13 @@ defmodule Lexec.Corrections do
   @moduledoc "Correction and withdrawal workflow (T-11)."
 
   import Ecto.Query
-  alias Lexec.Corrections.Request
   alias Lexec.{Catalog, Repo, Rules}
+  alias Lexec.Corrections.Request
 
   @spec change_request(map()) :: Ecto.Changeset.t()
   def change_request(attrs \\ %{}), do: Request.changeset(%Request{}, attrs)
 
-  @spec create_request(map()) :: {:ok, %Request{}} | {:error, Ecto.Changeset.t()}
+  @spec create_request(map()) :: {:ok, Request.t()} | {:error, Ecto.Changeset.t()}
   def create_request(attrs) do
     days = Rules.fetch!(:app, ["corrections", "response_days"])
 
@@ -82,7 +95,7 @@ defmodule Lexec.Corrections do
     |> Repo.insert()
   end
 
-  @spec list_open() :: [%Request{}]
+  @spec list_open() :: [Request.t()]
   def list_open do
     Repo.all(from r in Request, where: r.status == "received", order_by: r.due_on)
   end
@@ -92,7 +105,7 @@ defmodule Lexec.Corrections do
   catalog; `:correct` and `:reject` only close the request with a note.
   """
   @spec resolve(integer(), :withdraw | :correct | :reject, String.t()) ::
-          {:ok, %Request{}} | {:error, term()}
+          {:ok, Request.t()} | {:error, term()}
   def resolve(id, action, note \\ "") when action in [:withdraw, :correct, :reject] do
     with %Request{status: "received"} = request <- Repo.get(Request, id),
          :ok <- apply_action(action, request) do
@@ -100,6 +113,8 @@ defmodule Lexec.Corrections do
       |> Ecto.Changeset.change(
         status: status_for(action),
         action_taken: String.slice(note, 0, 250),
+        # The contact address was only kept to answer this request.
+        contact_email: nil,
         resolved_at: DateTime.utc_now(:second)
       )
       |> Repo.update()

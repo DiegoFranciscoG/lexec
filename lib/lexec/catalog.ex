@@ -144,13 +144,19 @@ defmodule Lexec.Catalog do
   end
 
   @doc "Distinct filter values for the search form."
-  @spec filter_options() :: %{action_types: [String.t()], rapporteurs: [String.t()], years: [integer()]}
+  @spec filter_options() :: %{
+          action_types: [String.t()],
+          rapporteurs: [String.t()],
+          years: [integer()]
+        }
   def filter_options do
     published = from(r in Ruling, where: r.status == "published")
 
     %{
       action_types:
-        Repo.all(from r in published, distinct: true, order_by: r.action_type, select: r.action_type),
+        Repo.all(
+          from r in published, distinct: true, order_by: r.action_type, select: r.action_type
+        ),
       rapporteurs:
         Repo.all(
           from r in published,
@@ -180,7 +186,11 @@ defmodule Lexec.Catalog do
       excluded: Repo.aggregate(Lexec.Catalog.Exclusion, :count),
       paragraphs:
         Repo.aggregate(
-          from(p in Paragraph, join: r in Ruling, on: r.id == p.ruling_id, where: r.status == "published"),
+          from(p in Paragraph,
+            join: r in Ruling,
+            on: r.id == p.ruling_id,
+            where: r.status == "published"
+          ),
           :count
         )
     }
@@ -191,7 +201,7 @@ defmodule Lexec.Catalog do
   paragraph, relation and stat from the catalog. Only the case number and the
   `withdrawn` status remain, so it is never harvested again.
   """
-  @spec withdraw(String.t()) :: {:ok, %Ruling{}} | {:error, term()}
+  @spec withdraw(String.t()) :: {:ok, Ruling.t()} | {:error, term()}
   def withdraw(case_number) when is_binary(case_number) do
     case Repo.get_by(Ruling, case_number: case_number) do
       nil ->
@@ -220,7 +230,7 @@ defmodule Lexec.Catalog do
   end
 
   @doc "Publishes a ruling that was waiting for review and indexes it."
-  @spec publish(%Ruling{}) :: {:ok, %Ruling{}} | {:error, term()}
+  @spec publish(Ruling.t()) :: {:ok, Ruling.t()} | {:error, term()}
   def publish(%Ruling{status: "pending_review"} = ruling) do
     ruling = ruling |> Ecto.Changeset.change(status: "published") |> Repo.update!()
 

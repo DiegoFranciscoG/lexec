@@ -1,0 +1,342 @@
+[
+  {
+    "query": "despido de una mujer embarazada",
+    "expected": [
+      "9101-20-EP/23#4",
+      "9101-20-EP/23#5",
+      "9101-20-EP/23#7"
+    ]
+  },
+  {
+    "query": "terminar el contrato a una trabajadora que espera un bebé",
+    "expected": [
+      "9101-20-EP/23#4",
+      "9101-20-EP/23#5",
+      "9101-20-EP/23#7"
+    ]
+  },
+  {
+    "query": "el empleador debe probar que el despido no fue por la gestación",
+    "expected": [
+      "9101-20-EP/23#4"
+    ]
+  },
+  {
+    "query": "protección de la maternidad en el trabajo aunque el patrono no fue notificado",
+    "expected": [
+      "9101-20-EP/23#5"
+    ]
+  },
+  {
+    "query": "juez que solo copia artículos sin explicarlos",
+    "expected": [
+      "9102-21-EP/24#4",
+      "9102-21-EP/24#5"
+    ]
+  },
+  {
+    "query": "discrepar del resultado no significa falta de motivación",
+    "expected": [
+      "9102-21-EP/24#7"
+    ]
+  },
+  {
+    "query": "inadmisión del recurso de casación",
+    "expected": [
+      "9102-21-EP/24#1",
+      "9102-21-EP/24#6"
+    ]
+  },
+  {
+    "query": "el seguro social no entrega medicamentos para el cáncer",
+    "expected": [
+      "9103-19-EP/22#1",
+      "9103-19-EP/22#5"
+    ]
+  },
+  {
+    "query": "pacientes con enfermedades graves tienen atención gratuita",
+    "expected": [
+      "9103-19-EP/22#4"
+    ]
+  },
+  {
+    "query": "falta de stock de fármacos no es un asunto meramente administrativo",
+    "expected": [
+      "9103-19-EP/22#5",
+      "9103-19-EP/22#2"
+    ]
+  },
+  {
+    "query": "acceso oportuno a servicios de salud",
+    "expected": [
+      "9103-19-EP/22#4"
+    ]
+  },
+  {
+    "query": "un tribunal cambia su jurisprudencia sin explicar por qué",
+    "expected": [
+      "9104-22-EP/24#5",
+      "9104-22-EP/24#1"
+    ]
+  },
+  {
+    "query": "normas previas claras y públicas",
+    "expected": [
+      "9104-22-EP/24#4"
+    ]
+  },
+  {
+    "query": "previsibilidad de las decisiones judiciales",
+    "expected": [
+      "9104-22-EP/24#5"
+    ]
+  },
+  {
+    "query": "qué vicios hacen aparente una motivación",
+    "expected": [
+      "9105-18-EP/21#5"
+    ]
+  },
+  {
+    "query": "el juez no respondió un argumento importante de la parte",
+    "expected": [
+      "9105-18-EP/21#6",
+      "9105-18-EP/21#7",
+      "9105-18-EP/21#2"
+    ]
+  },
+  {
+    "query": "estructura mínima de la motivación normativa y fáctica",
+    "expected": [
+      "9105-18-EP/21#4"
+    ]
+  },
+  {
+    "query": "incongruencia por omitir argumentos relevantes",
+    "expected": [
+      "9105-18-EP/21#6",
+      "9105-18-EP/21#7"
+    ]
+  },
+  {
+    "query": "hay que agotar otras vías antes de la acción de protección",
+    "expected": [
+      "9106-20-JP/23#4",
+      "9106-20-JP/23#5"
+    ]
+  },
+  {
+    "query": "jueces rechazan la acción de protección diciendo que existe la vía ordinaria",
+    "expected": [
+      "9106-20-JP/23#1",
+      "9106-20-JP/23#5",
+      "9106-20-JP/23#6"
+    ]
+  },
+  {
+    "query": "la acción de protección no es subsidiaria",
+    "expected": [
+      "9106-20-JP/23#4"
+    ]
+  },
+  {
+    "query": "precedente obligatorio para jueces de garantías",
+    "expected": [
+      "9106-20-JP/23#7"
+    ]
+  },
+  {
+    "query": "citación por la prensa sin buscar al demandado",
+    "expected": [
+      "9107-21-EP/23#5",
+      "9107-21-EP/23#6",
+      "9107-21-EP/23#1"
+    ]
+  },
+  {
+    "query": "me demandaron y nunca me enteré del juicio",
+    "expected": [
+      "9107-21-EP/23#6",
+      "9107-21-EP/23#1",
+      "9107-21-EP/23#2"
+    ]
+  },
+  {
+    "query": "indefensión por falta de citación",
+    "expected": [
+      "9107-21-EP/23#6",
+      "9107-21-EP/23#4"
+    ]
+  },
+  {
+    "query": "derecho a defenderse en todas las etapas del proceso",
+    "expected": [
+      "9107-21-EP/23#4"
+    ]
+  },
+  {
+    "query": "el alcalde fija el valor de una tasa municipal",
+    "expected": [
+      "9108-19-IN/22#6",
+      "9108-19-IN/22#2"
+    ]
+  },
+  {
+    "query": "reserva de ley en materia de tributos",
+    "expected": [
+      "9108-19-IN/22#4"
+    ]
+  },
+  {
+    "query": "ordenanza que cobra por usar las veredas",
+    "expected": [
+      "9108-19-IN/22#1"
+    ]
+  },
+  {
+    "query": "elementos esenciales del impuesto deben estar en la ordenanza",
+    "expected": [
+      "9108-19-IN/22#5"
+    ]
+  },
+  {
+    "query": "despido de una persona con discapacidad por reestructuración",
+    "expected": [
+      "9109-22-EP/25#1",
+      "9109-22-EP/25#7",
+      "9109-22-EP/25#5"
+    ]
+  },
+  {
+    "query": "estabilidad laboral de las personas con discapacidad",
+    "expected": [
+      "9109-22-EP/25#5",
+      "9109-22-EP/25#4"
+    ]
+  },
+  {
+    "query": "carga de la prueba del empleador en grupos de atención prioritaria",
+    "expected": [
+      "9109-22-EP/25#6",
+      "9101-20-EP/23#4"
+    ]
+  },
+  {
+    "query": "multa a un periodista por un reportaje",
+    "expected": [
+      "9110-20-EP/24#1",
+      "9110-20-EP/24#6"
+    ]
+  },
+  {
+    "query": "censura a la prensa",
+    "expected": [
+      "9110-20-EP/24#2",
+      "9110-20-EP/24#5"
+    ]
+  },
+  {
+    "query": "derecho a difundir información de interés general",
+    "expected": [
+      "9110-20-EP/24#4"
+    ]
+  },
+  {
+    "query": "efecto inhibitorio en el periodismo",
+    "expected": [
+      "9110-20-EP/24#6"
+    ]
+  },
+  {
+    "query": "cortaron el agua potable por meses",
+    "expected": [
+      "9111-23-EP/25#1",
+      "9111-23-EP/25#6"
+    ]
+  },
+  {
+    "query": "el agua es un derecho fundamental irrenunciable",
+    "expected": [
+      "9111-23-EP/25#4"
+    ]
+  },
+  {
+    "query": "abastecimiento alternativo durante obras de mantenimiento",
+    "expected": [
+      "9111-23-EP/25#5"
+    ]
+  },
+  {
+    "query": "prisión preventiva automática sin medidas alternativas",
+    "expected": [
+      "9112-21-CN/23#5",
+      "9112-21-CN/23#6",
+      "9112-21-CN/23#1"
+    ]
+  },
+  {
+    "query": "la privación de libertad es excepcional",
+    "expected": [
+      "9112-21-CN/23#4",
+      "9112-21-CN/23#2"
+    ]
+  },
+  {
+    "query": "medidas sustitutivas a la cárcel",
+    "expected": [
+      "9112-21-CN/23#6",
+      "9112-21-CN/23#5"
+    ]
+  },
+  {
+    "query": "proceso judicial que tarda siete años",
+    "expected": [
+      "9113-19-EP/23#1",
+      "9113-19-EP/23#6"
+    ]
+  },
+  {
+    "query": "criterios para saber si un plazo es razonable",
+    "expected": [
+      "9113-19-EP/23#5"
+    ]
+  },
+  {
+    "query": "demoras injustificadas del juzgado",
+    "expected": [
+      "9113-19-EP/23#6",
+      "9113-19-EP/23#7",
+      "9113-19-EP/23#2"
+    ]
+  },
+  {
+    "query": "minería en un bosque protector",
+    "expected": [
+      "9114-22-EP/24#1",
+      "9114-22-EP/24#7"
+    ]
+  },
+  {
+    "query": "principio de precaución ambiental",
+    "expected": [
+      "9114-22-EP/24#5",
+      "9114-22-EP/24#4"
+    ]
+  },
+  {
+    "query": "el empleador no pagó los aportes y me negaron la jubilación",
+    "expected": [
+      "9115-20-EP/22#5",
+      "9115-20-EP/22#1",
+      "9115-20-EP/22#2"
+    ]
+  },
+  {
+    "query": "publicar en internet sanciones ya cumplidas",
+    "expected": [
+      "9116-21-EP/25#6",
+      "9116-21-EP/25#1"
+    ]
+  }
+]

@@ -15,7 +15,12 @@ defmodule Lexec.Answer do
   @callback generate(String.t(), [Lexec.Index.hit()]) :: {:ok, String.t()} | {:error, term()}
 
   @type sentence :: %{text: String.t(), case_number: String.t(), paragraph_number: integer()}
-  @type t :: %{sentences: [sentence()], dropped: non_neg_integer(), empty?: boolean(), message: String.t() | nil}
+  @type t :: %{
+          sentences: [sentence()],
+          dropped: non_neg_integer(),
+          empty?: boolean(),
+          message: String.t() | nil
+        }
 
   @spec backend() :: module()
   def backend, do: Application.fetch_env!(:lexec, :answer)
@@ -130,12 +135,10 @@ defmodule Lexec.Answer.Extractive do
     terms = terms(query)
 
     text =
-      hits
-      |> Enum.map(fn hit ->
+      Enum.map_join(hits, " ", fn hit ->
         sentence = best_sentence(hit.text, terms)
         "Según la Corte, «#{sentence}» [#{hit.case_number}, párr. #{hit.paragraph_number}]."
       end)
-      |> Enum.join(" ")
 
     {:ok, text}
   end

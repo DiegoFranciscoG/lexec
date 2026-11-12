@@ -131,7 +131,15 @@ defmodule Lexec.Harvest.Worker do
         inserted_at: now,
         updated_at: now
       },
-      on_conflict: [set: [sha256: sha, status: status, error: error && String.slice(inspect(error), 0, 250), fetched_at: now, updated_at: now]],
+      on_conflict: [
+        set: [
+          sha256: sha,
+          status: status,
+          error: error && String.slice(inspect(error), 0, 250),
+          fetched_at: now,
+          updated_at: now
+        ]
+      ],
       conflict_target: :url
     )
 

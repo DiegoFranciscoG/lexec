@@ -59,7 +59,7 @@ defmodule Lexec.Index do
   def delete_ruling(ruling_id), do: backend().delete_ruling(ruling_id)
 
   @doc "Indexes every paragraph of a published ruling (with embeddings if enabled)."
-  @spec index_ruling(%Ruling{}) :: :ok | {:error, term()}
+  @spec index_ruling(Ruling.t()) :: :ok | {:error, term()}
   def index_ruling(%Ruling{status: "published"} = ruling) do
     paragraphs =
       Repo.all(from p in Paragraph, where: p.ruling_id == ^ruling.id, order_by: p.number)
@@ -97,7 +97,7 @@ defmodule Lexec.Index do
   end
 
   @doc false
-  @spec document(%Ruling{}, %Paragraph{}) :: map()
+  @spec document(Ruling.t(), Paragraph.t()) :: map()
   def document(ruling, paragraph) do
     %{
       "id" => "#{ruling.id}-#{paragraph.number}",

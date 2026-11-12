@@ -6,16 +6,17 @@ defmodule Lexec.Application do
 
   @impl true
   def start(_type, _args) do
-    children = [
-      LexecWeb.Telemetry,
-      Lexec.Repo,
-      {Ecto.Migrator,
-       repos: Application.fetch_env!(:lexec, :ecto_repos), skip: skip_migrations?()},
-      {DNSCluster, query: Application.get_env(:lexec, :dns_cluster_query) || :ignore},
-      {Phoenix.PubSub, name: Lexec.PubSub},
-      Lexec.RateLimiter,
-      Lexec.Harvest.Throttle
-    ] ++
+    children =
+      [
+        LexecWeb.Telemetry,
+        Lexec.Repo,
+        {Ecto.Migrator,
+         repos: Application.fetch_env!(:lexec, :ecto_repos), skip: skip_migrations?()},
+        {DNSCluster, query: Application.get_env(:lexec, :dns_cluster_query) || :ignore},
+        {Phoenix.PubSub, name: Lexec.PubSub},
+        Lexec.RateLimiter,
+        Lexec.Harvest.Throttle
+      ] ++
         Lexec.Models.children() ++
         [
           {Task, &setup_index/0},
@@ -43,7 +44,7 @@ defmodule Lexec.Application do
     end
   end
 
-  defp skip_migrations?() do
+  defp skip_migrations? do
     # By default, sqlite migrations are run when using a release
     System.get_env("RELEASE_NAME") == nil
   end

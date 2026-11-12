@@ -40,7 +40,14 @@ defmodule Lexec.Extract.MetadataTest do
 
     test "extracts text from a PDF keeping pages", %{tmp_dir: dir} do
       path = Path.join(dir, "s.pdf")
-      File.write!(path, Fixtures.pdf([["Sentencia No. 9301-22-EP/24", "1. Garantía de motivación."], ["2. Segundo párrafo."]]))
+
+      File.write!(
+        path,
+        Fixtures.pdf([
+          ["Sentencia No. 9301-22-EP/24", "1. Garantía de motivación."],
+          ["2. Segundo párrafo."]
+        ])
+      )
 
       assert {:ok, text} = Pdf.to_text(path)
       assert text =~ "9301-22-EP/24"

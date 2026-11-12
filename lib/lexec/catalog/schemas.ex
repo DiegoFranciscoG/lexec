@@ -1,6 +1,8 @@
 defmodule Lexec.Catalog.Ruling do
   @moduledoc "A published (or pending/withdrawn) ruling. Only anonymized text hangs from it."
   use Ecto.Schema
+
+  @type t :: %__MODULE__{}
   import Ecto.Changeset
 
   @statuses ~w(pending_review published withdrawn)
@@ -49,7 +51,10 @@ defmodule Lexec.Catalog.Ruling do
       :paragraph_count
     ])
     |> validate_required([:case_number, :action_type, :official_url, :status, :rules_version])
-    |> validate_format(:case_number, ~r/^(\d{1,5}-\d{2}-[A-Z]{2}\/\d{2}|\d{3}-\d{2}-S[A-Z]{2,3}-CC)$/)
+    |> validate_format(
+      :case_number,
+      ~r/^(\d{1,5}-\d{2}-[A-Z]{2}\/\d{2}|\d{3}-\d{2}-S[A-Z]{2,3}-CC)$/
+    )
     |> validate_inclusion(:action_type, types)
     |> validate_inclusion(:status, @statuses)
     |> validate_inclusion(:decision, @decisions)
@@ -65,6 +70,8 @@ defmodule Lexec.Catalog.Paragraph do
   @moduledoc "A numbered paragraph of a ruling. `text` is always anonymized."
   use Ecto.Schema
 
+  @type t :: %__MODULE__{}
+
   schema "paragraphs" do
     belongs_to :ruling, Lexec.Catalog.Ruling
     field :number, :integer
@@ -75,6 +82,8 @@ end
 defmodule Lexec.Catalog.Citation do
   @moduledoc "Ruling A cites ruling B (by case number) in paragraph N."
   use Ecto.Schema
+
+  @type t :: %__MODULE__{}
 
   schema "ruling_citations" do
     belongs_to :citing_ruling, Lexec.Catalog.Ruling
@@ -88,6 +97,8 @@ defmodule Lexec.Catalog.CitedNorm do
   @moduledoc "An article of a legal body invoked in paragraph N."
   use Ecto.Schema
 
+  @type t :: %__MODULE__{}
+
   schema "cited_norms" do
     belongs_to :ruling, Lexec.Catalog.Ruling
     field :norm_body, :string
@@ -99,6 +110,8 @@ end
 defmodule Lexec.Catalog.Exclusion do
   @moduledoc "Why a document was excluded. Never stores any of its text."
   use Ecto.Schema
+
+  @type t :: %__MODULE__{}
   import Ecto.Changeset
 
   @reasons ~w(minors violence reserved other)
@@ -125,6 +138,8 @@ defmodule Lexec.Catalog.AnonymizationStat do
   @moduledoc "How many entities of a type were replaced. Never the original value."
   use Ecto.Schema
 
+  @type t :: %__MODULE__{}
+
   schema "anonymization_stats" do
     belongs_to :ruling, Lexec.Catalog.Ruling
     field :entity_type, :string
@@ -137,6 +152,8 @@ end
 defmodule Lexec.Catalog.ReviewItem do
   @moduledoc "A ruling waiting for human review before it is published."
   use Ecto.Schema
+
+  @type t :: %__MODULE__{}
 
   schema "review_items" do
     belongs_to :ruling, Lexec.Catalog.Ruling
@@ -151,6 +168,8 @@ end
 defmodule Lexec.Catalog.FetchedDocument do
   @moduledoc "Download cache: a URL is never fetched twice once it succeeded."
   use Ecto.Schema
+
+  @type t :: %__MODULE__{}
 
   schema "fetched_documents" do
     field :url, :string
