@@ -1,10 +1,7 @@
 # syntax=docker/dockerfile:1
 # Multi-stage build: compile the release with the full toolchain, run it on a slim
 # Debian image as a non-root user. Versions are pinned (never :latest).
-ARG ELIXIR_IMAGE=hexpm/elixir:1.20.5-erlang-29.1.2-debian-trixie-20261104-slim
-ARG RUNNER_IMAGE=debian:trixie-20261104-slim
-
-FROM ${ELIXIR_IMAGE} AS build
+FROM hexpm/elixir:1.20.5-erlang-29.1.2-debian-trixie-20261104-slim AS build
 RUN apt-get update \
  && apt-get install -y --no-install-recommends build-essential git ca-certificates curl \
  && rm -rf /var/lib/apt/lists/*
@@ -27,7 +24,7 @@ COPY config/runtime.exs config/
 COPY rel rel
 RUN mix release
 
-FROM ${RUNNER_IMAGE} AS runner
+FROM debian:trixie-20261104-slim AS runner
 RUN apt-get update \
  && apt-get install -y --no-install-recommends libstdc++6 openssl libncurses6 ca-certificates poppler-utils curl \
  && rm -rf /var/lib/apt/lists/* \
