@@ -1,0 +1,599 @@
+[
+  {
+    "text": "Al respecto, la Sentencia No. 308-11-SIN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "308-11-SIN-CC"
+    ]
+  },
+  {
+    "text": "Sentencias 91-24-EP/26, 1049-15-IS/17 y 2972-16-JH/20.",
+    "expected": [
+      "91-24-EP/26",
+      "1049-15-IS/17",
+      "2972-16-JH/20"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 120-09-SEP-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "120-09-SEP-CC"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 109-11-SIN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "109-11-SIN-CC"
+    ]
+  },
+  {
+    "text": "La causa 2987-20-JP se encuentra en fase de admisión; la audiencia es el 2023-05-14.",
+    "expected": []
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 027-12-SIN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "027-12-SIN-CC"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 177-12-SIN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "177-12-SIN-CC"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 2680-16-CN/17 se fijó la regla aplicable.",
+    "expected": [
+      "2680-16-CN/17"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 035-09-SIN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "035-09-SIN-CC"
+    ]
+  },
+  {
+    "text": "El expediente 1089-21-EP acumuló los procesos 17230-2019-01234 y 09281-2020-00077.",
+    "expected": []
+  },
+  {
+    "text": "Este criterio fue reiterado en la Sentencia No. 3395-15-IN/18 (párr. 47).",
+    "expected": [
+      "3395-15-IN/18"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 126-19-JP/20 se fijó la regla aplicable.",
+    "expected": [
+      "126-19-JP/20"
+    ]
+  },
+  {
+    "text": "La Corte, en el dictamen 3094-22-JH/26, analizó el tema; véase también 738-20-EP/20.",
+    "expected": [
+      "3094-22-JH/26",
+      "738-20-EP/20"
+    ]
+  },
+  {
+    "text": "Sentencias 1538-14-EP/14, 97-21-EP/25 y 1228-14-JP/14.",
+    "expected": [
+      "1538-14-EP/14",
+      "97-21-EP/25",
+      "1228-14-JP/14"
+    ]
+  },
+  {
+    "text": "El expediente 2714-18-EP acumuló los procesos 17230-2019-01234 y 09281-2020-00077.",
+    "expected": []
+  },
+  {
+    "text": "Como señaló esta Corte en la sentencia 893-22-JP/24, la motivación es una garantía.",
+    "expected": [
+      "893-22-JP/24"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 45-23-EP/26 se fijó la regla aplicable.",
+    "expected": [
+      "45-23-EP/26"
+    ]
+  },
+  {
+    "text": "Sentencias 1705-15-CN/15, 2500-22-CN/24 y 2776-18-IN/22.",
+    "expected": [
+      "1705-15-CN/15",
+      "2500-22-CN/24",
+      "2776-18-IN/22"
+    ]
+  },
+  {
+    "text": "Este criterio fue reiterado en la Sentencia No. 305-14-JH/14 (párr. 47).",
+    "expected": [
+      "305-14-JH/14"
+    ]
+  },
+  {
+    "text": "La causa 140-18-IN se encuentra en fase de admisión; la audiencia es el 2023-05-14.",
+    "expected": []
+  },
+  {
+    "text": "Sentencias 3058-23-CN/25, 160-25-IS/26 y 1584-22-IS/23.",
+    "expected": [
+      "3058-23-CN/25",
+      "160-25-IS/26",
+      "1584-22-IS/23"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 346-12-SIN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "346-12-SIN-CC"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 2682-24-JH/26 se fijó la regla aplicable.",
+    "expected": [
+      "2682-24-JH/26"
+    ]
+  },
+  {
+    "text": "Ver sentencias 3048-23-EP/23 y 1903-22-EP/23, párrs. 30 a 35.",
+    "expected": [
+      "3048-23-EP/23",
+      "1903-22-EP/23"
+    ]
+  },
+  {
+    "text": "El caso No. 306-23-EP fue presentado en 2019 y sorteado el 12 de mayo de 2020.",
+    "expected": []
+  },
+  {
+    "text": "Sentencias 1116-22-JP/26, 884-17-IN/20 y 1581-23-IS/26.",
+    "expected": [
+      "1116-22-JP/26",
+      "884-17-IN/20",
+      "1581-23-IS/26"
+    ]
+  },
+  {
+    "text": "Este criterio fue reiterado en la Sentencia No. 3517-20-IS/24 (párr. 47).",
+    "expected": [
+      "3517-20-IS/24"
+    ]
+  },
+  {
+    "text": "Sentencias 1973-17-IN/19, 958-23-JP/23 y 125-16-CN/19.",
+    "expected": [
+      "1973-17-IN/19",
+      "958-23-JP/23",
+      "125-16-CN/19"
+    ]
+  },
+  {
+    "text": "Como señaló esta Corte en la sentencia 974-23-CN/25, la motivación es una garantía.",
+    "expected": [
+      "974-23-CN/25"
+    ]
+  },
+  {
+    "text": "El expediente 333-25-IN acumuló los procesos 17230-2019-01234 y 09281-2020-00077.",
+    "expected": []
+  },
+  {
+    "text": "Ver sentencias 760-15-EP/17 y 137-16-EP/20, párrs. 30 a 35.",
+    "expected": [
+      "760-15-EP/17",
+      "137-16-EP/20"
+    ]
+  },
+  {
+    "text": "Sentencias 2601-23-CN/23, 82-16-CN/18 y 3487-23-CN/26.",
+    "expected": [
+      "2601-23-CN/23",
+      "82-16-CN/18",
+      "3487-23-CN/26"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 2729-21-IS/24 se fijó la regla aplicable.",
+    "expected": [
+      "2729-21-IS/24"
+    ]
+  },
+  {
+    "text": "Como señaló esta Corte en la sentencia 1309-19-JH/19, la motivación es una garantía.",
+    "expected": [
+      "1309-19-JH/19"
+    ]
+  },
+  {
+    "text": "Se pagaron 1234-19 dólares según el comprobante 0012-45-EP.",
+    "expected": []
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 220-09-SEP-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "220-09-SEP-CC"
+    ]
+  },
+  {
+    "text": "Sentencias 151-18-EP/22, 3467-20-IN/21 y 78-19-EP/23.",
+    "expected": [
+      "151-18-EP/22",
+      "3467-20-IN/21",
+      "78-19-EP/23"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 2933-18-IN/19 se fijó la regla aplicable.",
+    "expected": [
+      "2933-18-IN/19"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 765-20-EP/22 se fijó la regla aplicable.",
+    "expected": [
+      "765-20-EP/22"
+    ]
+  },
+  {
+    "text": "La causa 2618-19-EP se encuentra en fase de admisión; la audiencia es el 2023-05-14.",
+    "expected": []
+  },
+  {
+    "text": "(Corte Constitucional, sentencia 1676-16-EP/19, párr. 12).",
+    "expected": [
+      "1676-16-EP/19"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 1145-19-EP/21 se fijó la regla aplicable.",
+    "expected": [
+      "1145-19-EP/21"
+    ]
+  },
+  {
+    "text": "Este criterio fue reiterado en la Sentencia No. 2618-20-EP/24 (párr. 47).",
+    "expected": [
+      "2618-20-EP/24"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 231-11-SIN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "231-11-SIN-CC"
+    ]
+  },
+  {
+    "text": "Se pagaron 1234-19 dólares según el comprobante 0012-45-EP.",
+    "expected": []
+  },
+  {
+    "text": "Este criterio fue reiterado en la Sentencia No. 2378-20-JP/24 (párr. 47).",
+    "expected": [
+      "2378-20-JP/24"
+    ]
+  },
+  {
+    "text": "Sentencias 368-25-JH/26, 2119-20-JH/24 y 226-21-EP/22.",
+    "expected": [
+      "368-25-JH/26",
+      "2119-20-JH/24",
+      "226-21-EP/22"
+    ]
+  },
+  {
+    "text": "(Corte Constitucional, sentencia 1272-15-CN/18, párr. 12).",
+    "expected": [
+      "1272-15-CN/18"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 2427-19-IS/21 se fijó la regla aplicable.",
+    "expected": [
+      "2427-19-IS/21"
+    ]
+  },
+  {
+    "text": "La causa 1150-25-JP se encuentra en fase de admisión; la audiencia es el 2023-05-14.",
+    "expected": []
+  },
+  {
+    "text": "La Corte, en el dictamen 1932-25-IS/26, analizó el tema; véase también 2312-25-JH/25.",
+    "expected": [
+      "1932-25-IS/26",
+      "2312-25-JH/25"
+    ]
+  },
+  {
+    "text": "Como señaló esta Corte en la sentencia 455-18-EP/19, la motivación es una garantía.",
+    "expected": [
+      "455-18-EP/19"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 3540-25-JH/25 se fijó la regla aplicable.",
+    "expected": [
+      "3540-25-JH/25"
+    ]
+  },
+  {
+    "text": "(Corte Constitucional, sentencia 3296-23-IS/26, párr. 12).",
+    "expected": [
+      "3296-23-IS/26"
+    ]
+  },
+  {
+    "text": "El caso No. 53-22-EP fue presentado en 2019 y sorteado el 12 de mayo de 2020.",
+    "expected": []
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 260-10-SIN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "260-10-SIN-CC"
+    ]
+  },
+  {
+    "text": "Ver sentencias 2078-23-CN/26 y 2309-22-JH/22, párrs. 30 a 35.",
+    "expected": [
+      "2078-23-CN/26",
+      "2309-22-JH/22"
+    ]
+  },
+  {
+    "text": "Como señaló esta Corte en la sentencia 999-19-EP/21, la motivación es una garantía.",
+    "expected": [
+      "999-19-EP/21"
+    ]
+  },
+  {
+    "text": "Ver sentencias 732-19-CN/22 y 3513-24-EP/25, párrs. 30 a 35.",
+    "expected": [
+      "732-19-CN/22",
+      "3513-24-EP/25"
+    ]
+  },
+  {
+    "text": "El caso No. 1398-24-EP fue presentado en 2019 y sorteado el 12 de mayo de 2020.",
+    "expected": []
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 248-09-SIN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "248-09-SIN-CC"
+    ]
+  },
+  {
+    "text": "La Corte, en el dictamen 1866-19-IN/22, analizó el tema; véase también 2843-21-JH/23.",
+    "expected": [
+      "1866-19-IN/22",
+      "2843-21-JH/23"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 015-09-SEP-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "015-09-SEP-CC"
+    ]
+  },
+  {
+    "text": "La Corte, en el dictamen 800-23-IN/24, analizó el tema; véase también 633-14-EP/18.",
+    "expected": [
+      "800-23-IN/24",
+      "633-14-EP/18"
+    ]
+  },
+  {
+    "text": "La causa 3129-23-JP se encuentra en fase de admisión; la audiencia es el 2023-05-14.",
+    "expected": []
+  },
+  {
+    "text": "(Corte Constitucional, sentencia 1541-23-JP/24, párr. 12).",
+    "expected": [
+      "1541-23-JP/24"
+    ]
+  },
+  {
+    "text": "(Corte Constitucional, sentencia 1258-16-JH/20, párr. 12).",
+    "expected": [
+      "1258-16-JH/20"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 239-12-SCN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "239-12-SCN-CC"
+    ]
+  },
+  {
+    "text": "Como señaló esta Corte en la sentencia 1987-25-EP/26, la motivación es una garantía.",
+    "expected": [
+      "1987-25-EP/26"
+    ]
+  },
+  {
+    "text": "El expediente 2967-25-EP acumuló los procesos 17230-2019-01234 y 09281-2020-00077.",
+    "expected": []
+  },
+  {
+    "text": "Sentencias 1045-14-EP/14, 70-23-JH/23 y 2542-15-JP/19.",
+    "expected": [
+      "1045-14-EP/14",
+      "70-23-JH/23",
+      "2542-15-JP/19"
+    ]
+  },
+  {
+    "text": "La Corte, en el dictamen 3088-19-JP/21, analizó el tema; véase también 454-19-EP/23.",
+    "expected": [
+      "3088-19-JP/21",
+      "454-19-EP/23"
+    ]
+  },
+  {
+    "text": "Este criterio fue reiterado en la Sentencia No. 1475-25-JP/26 (párr. 47).",
+    "expected": [
+      "1475-25-JP/26"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 3107-20-IN/23 se fijó la regla aplicable.",
+    "expected": [
+      "3107-20-IN/23"
+    ]
+  },
+  {
+    "text": "Se pagaron 1234-19 dólares según el comprobante 0012-45-EP.",
+    "expected": []
+  },
+  {
+    "text": "Como señaló esta Corte en la sentencia 1263-22-JP/22, la motivación es una garantía.",
+    "expected": [
+      "1263-22-JP/22"
+    ]
+  },
+  {
+    "text": "Ver sentencias 3518-17-JP/20 y 464-25-IN/26, párrs. 30 a 35.",
+    "expected": [
+      "3518-17-JP/20",
+      "464-25-IN/26"
+    ]
+  },
+  {
+    "text": "Sentencias 1656-24-IN/25, 3153-17-JH/19 y 3659-23-CN/24.",
+    "expected": [
+      "1656-24-IN/25",
+      "3153-17-JH/19",
+      "3659-23-CN/24"
+    ]
+  },
+  {
+    "text": "Este criterio fue reiterado en la Sentencia No. 2350-16-IS/17 (párr. 47).",
+    "expected": [
+      "2350-16-IS/17"
+    ]
+  },
+  {
+    "text": "El caso No. 745-19-JP fue presentado en 2019 y sorteado el 12 de mayo de 2020.",
+    "expected": []
+  },
+  {
+    "text": "(Corte Constitucional, sentencia 1158-21-IS/21, párr. 12).",
+    "expected": [
+      "1158-21-IS/21"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 1717-21-IN/24 se fijó la regla aplicable.",
+    "expected": [
+      "1717-21-IN/24"
+    ]
+  },
+  {
+    "text": "Este criterio fue reiterado en la Sentencia No. 2808-19-JP/20 (párr. 47).",
+    "expected": [
+      "2808-19-JP/20"
+    ]
+  },
+  {
+    "text": "En la sentencia N.° 3318-24-CN/26 se fijó la regla aplicable.",
+    "expected": [
+      "3318-24-CN/26"
+    ]
+  },
+  {
+    "text": "El caso No. 724-25-EP fue presentado en 2019 y sorteado el 12 de mayo de 2020.",
+    "expected": []
+  },
+  {
+    "text": "Como señaló esta Corte en la sentencia 2653-18-JH/22, la motivación es una garantía.",
+    "expected": [
+      "2653-18-JH/22"
+    ]
+  },
+  {
+    "text": "(Corte Constitucional, sentencia 2802-21-CN/21, párr. 12).",
+    "expected": [
+      "2802-21-CN/21"
+    ]
+  },
+  {
+    "text": "Este criterio fue reiterado en la Sentencia No. 3185-22-EP/26 (párr. 47).",
+    "expected": [
+      "3185-22-EP/26"
+    ]
+  },
+  {
+    "text": "Ver sentencias 2883-14-IS/17 y 635-18-EP/20, párrs. 30 a 35.",
+    "expected": [
+      "2883-14-IS/17",
+      "635-18-EP/20"
+    ]
+  },
+  {
+    "text": "Se pagaron 1234-19 dólares según el comprobante 0012-45-EP.",
+    "expected": []
+  },
+  {
+    "text": "Como señaló esta Corte en la sentencia 2185-22-JP/23, la motivación es una garantía.",
+    "expected": [
+      "2185-22-JP/23"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 184-09-SIS-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "184-09-SIS-CC"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 346-12-SEP-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "346-12-SEP-CC"
+    ]
+  },
+  {
+    "text": "(Corte Constitucional, sentencia 1966-17-EP/17, párr. 12).",
+    "expected": [
+      "1966-17-EP/17"
+    ]
+  },
+  {
+    "text": "La causa 2175-15-JP se encuentra en fase de admisión; la audiencia es el 2023-05-14.",
+    "expected": []
+  },
+  {
+    "text": "Sentencias 3479-16-IN/19, 2788-23-CN/26 y 1619-16-CN/16.",
+    "expected": [
+      "3479-16-IN/19",
+      "2788-23-CN/26",
+      "1619-16-CN/16"
+    ]
+  },
+  {
+    "text": "Este criterio fue reiterado en la Sentencia No. 668-15-IS/18 (párr. 47).",
+    "expected": [
+      "668-15-IS/18"
+    ]
+  },
+  {
+    "text": "Al respecto, la Sentencia No. 256-12-SIN-CC de la Corte de transición resolvió lo contrario.",
+    "expected": [
+      "256-12-SIN-CC"
+    ]
+  },
+  {
+    "text": "Sentencias 490-22-JP/24, 226-14-IN/18 y 1119-18-EP/19.",
+    "expected": [
+      "490-22-JP/24",
+      "226-14-IN/18",
+      "1119-18-EP/19"
+    ]
+  },
+  {
+    "text": "La causa 1894-16-IN se encuentra en fase de admisión; la audiencia es el 2023-05-14.",
+    "expected": []
+  }
+]
