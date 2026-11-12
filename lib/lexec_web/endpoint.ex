@@ -47,6 +47,15 @@ defmodule LexecWeb.Endpoint do
 
   plug Plug.MethodOverride
   plug Plug.Head
-  plug Plug.Session, @session_options
+  plug :session
   plug LexecWeb.Router
+
+  # The session cookie is marked Secure when the site is served over HTTPS
+  # (decided at runtime from PHX_SCHEME), so plain-http local runs still work.
+  defp session(conn, _opts) do
+    opts =
+      Keyword.put(@session_options, :secure, Application.get_env(:lexec, :secure_cookies, false))
+
+    Plug.Session.call(conn, Plug.Session.init(opts))
+  end
 end

@@ -87,6 +87,9 @@ config :logger, :default_formatter,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Never write search terms, correction reasons or contact e-mails to the logs (LOPDP).
+config :phoenix, :filter_parameters, ["password", "q", "reason", "contact_email"]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"

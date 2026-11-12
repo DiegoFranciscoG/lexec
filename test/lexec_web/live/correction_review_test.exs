@@ -143,6 +143,14 @@ defmodule LexecWeb.CorrectionReviewTest do
       assert get_resp_header(conn, "referrer-policy") == ["strict-origin-when-cross-origin"]
     end
 
+    test "the session cookie is Secure when the site runs over HTTPS", %{conn: conn} do
+      Application.put_env(:lexec, :secure_cookies, true)
+      on_exit(fn -> Application.delete_env(:lexec, :secure_cookies) end)
+
+      [cookie] = conn |> get(~p"/") |> get_resp_header("set-cookie")
+      assert cookie =~ ~r/;\s*secure/i
+    end
+
     test "the session cookie is the only cookie and is HttpOnly", %{conn: conn} do
       conn = get(conn, ~p"/")
       cookies = get_resp_header(conn, "set-cookie")

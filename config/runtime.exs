@@ -120,6 +120,7 @@ if config_env() == :prod do
   public_port = String.to_integer(System.get_env("PHX_PUBLIC_PORT", "443"))
 
   config :lexec, :dns_cluster_query, System.get_env("DNS_CLUSTER_QUERY")
+  config :lexec, :secure_cookies, scheme == "https"
 
   config :lexec, LexecWeb.Endpoint,
     url: [host: host, port: public_port, scheme: scheme],
